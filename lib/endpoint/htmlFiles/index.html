@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Catalog</title>
+		<link rel="stylesheet" href="admin/css/index.css">
+		<script src="admin/js/index.js"></script>
+	</head>
+	<body>
+		<header>
+			<h1>Catalog Functions</h1>
+		</header>
+		<main>
+			<section class="catalogList">
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Version</th>
+							<th>Category</th>
+						</tr>
+					</thead>
+					<tbody id="tblCatalog_tbody">
+					</tbody>
+				</table>
+			</section>
+			<section class="catalogDetail">
+				<div>
+					<div>
+						<label>
+							Description:
+						</label>
+						<span id="spnCatalog_description"> </span>
+					</div>
+					<div>
+						<button type="button" id="btnRunTest">RUN TEST</button>
+					</div>
+				</div>
+				<div>
+					<article>
+						<h2>Input</h2>
+						<pre>
+							<code id="code_catalog_input">
+							</code>
+						</pre>
+					</article>
+					<article>
+						<h2>Output</h2>
+						<pre>
+							<code id="code_catalog_output">
+							</code>
+						</pre>
+					</article>
+				</div>
+			</section>
+			<div aria-hidden="true" class="dialogContainer" id="dialog_container">
+				<section>
+					<header>						
+						<h2 id="lbl_dialog_container_title">TEST</h2>
+					</header>
+					<div>
+						<label>Last Messages:</label>
+						<select size="1" id="cmbDialog_container_lastmessages">
+						</select>
+					</div>
+					<div>
+						<label>Message:</label>
+						<textarea id="txtDialog_container_message" style="height:120px"></textarea>
+					</div>
+					<div>
+						<label>Response:</label>
+						<textarea id="txtDialog_container_response" disabled style="height:120px"></textarea>
+					</div>
+					<div>
+						<label>POST example:</label>
+						<textarea id="txtDialog_container_curl" disabled style="height:50px"></textarea>
+					</div>
+					<div>
+						<label>GET example:</label>
+						<textarea id="txtDialog_container_get" disabled style="height:50px"></textarea>
+					</div>
+					<footer>
+						<button type="button" id="btn_dialog_container_run">RUN</button>
+						<button type="button" id="btn_dialog_container_cancel">CANCEL</button>
+					</footer>
+					<div style="clear: both;"></div>
+				</section>
+			</div>
+		</main>
+	</body>
+</html>
