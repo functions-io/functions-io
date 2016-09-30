@@ -1,4 +1,5 @@
 # FunctionsJS
+## Functional Micro Framework
 ## work in progress
 ## Example
 
