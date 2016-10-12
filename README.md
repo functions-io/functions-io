@@ -4,13 +4,13 @@
 Minimalist functional framework for [node](http://nodejs.org).
 
 ```javascript
-var functionsjs = require("functionsjs");
+var functionsjs = require("functions-io");
 functionsjs.listen();
 ```
 
 ## Installation
 ```bash
-$ npm install functionsjs
+$ npm install functions-io
 ```
 
 ## Features
