@@ -1,6 +1,6 @@
 {
   "name": "functionsjs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Functional Micro Framework",
   "main": "lib/index.js",
   "readmeFilename": "README.md" ,

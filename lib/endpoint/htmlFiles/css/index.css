@@ -21,8 +21,6 @@ body > main {
 }
 
 body > main > section {
-    height: calc(100% - 10px);
-    width: calc(50% - 10px);
     margin: 5px;
     float: left;
 }
@@ -32,7 +30,24 @@ body > main > section > div {
 }
 
 .catalogList{
-    overflow-y: auto;
+    overflow: auto;
+    height: calc(100% - 10px);
+    width: calc(70% - 10px);
+}
+
+.catalogList-control button {
+    width: 32px;
+    height: 32px;
+}
+
+.catalogList-control button svg {
+    width: 26px;
+    height: 26px;
+}
+
+.catalogDetail {
+    height: calc(100% - 10px);
+    width: calc(30% - 10px);
 }
 
 .catalogDetail > div:first-child {
@@ -171,6 +186,24 @@ table > tbody > tr:hover {
 
 table > tbody > tr > td > span:last-child {
     display: none;
+}
+
+.catalogList th:nth-child(2), .catalogList td:nth-child(2) {
+    width: 30px;
+}
+
+/*
+.catalogList th:nth-child(3), .catalogList td:nth-child(3) {
+    width: 50px;
+}
+*/
+
+.catalogList th:nth-child(n+4), .catalogList td:nth-child(n+4) {
+    width: 50px;
+}
+
+.catalogList th:nth-child(n+7), .catalogList td:nth-child(n+7) {
+    width: 20px;
 }
 
 .rowSelected > td {
