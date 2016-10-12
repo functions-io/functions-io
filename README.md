@@ -1,4 +1,4 @@
-# FunctionsJS
+# Functions-IO
 ## Functional Micro Framework
 ## work in progress...
 Minimalist functional framework for [node](http://nodejs.org).
