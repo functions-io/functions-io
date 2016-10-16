@@ -3,7 +3,7 @@ var assert = require("assert");
 var port = 8187;
 var host = "127.0.0.1";
 var http = require("http");
-var controlFunctions = null;
+var server = functionsjs.createServer({path:"test/functions"});
 
 function httpPost(messageType, path, data, callBack){
     var options = {
@@ -38,11 +38,14 @@ function httpPost(messageType, path, data, callBack){
 }
 
 try{
-    functionsjs.listen({path:"test/functions", port: port}, function(err, control){
-        assert.equal(err, null);
-
-        controlFunctions = control;
-        test1();
+    server.factory.scan(function(err){
+        if (err){
+            console.error(err);
+        }
+        else{
+            server.listen(port);
+            test1();
+        }
     });
 }
 catch(err){
@@ -51,8 +54,8 @@ catch(err){
 }
 
 function fim(){
-    if (controlFunctions){
-        controlFunctions.serverHTTP.close();
+    if (server){
+        server.serverHTTP.close();
     }
 }
 
@@ -84,6 +87,15 @@ function test3(){
 
 function test4(){
     httpPost("application/json", "/sum/v1", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
+        assert.equal(errHTTPCode, null);
+        assert.equal(data.result, 8);
+        
+        test5();
+    });
+}
+
+function test5(){
+    httpPost("application/json", "/subfolder.sum/v1", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
         assert.equal(errHTTPCode, null);
         assert.equal(data.result, 8);
         

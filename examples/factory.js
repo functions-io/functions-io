@@ -1,17 +1,14 @@
 var functionsjs = require("../");
-var factory;
+var server = functionsjs.createServer({path:"test/functions"});
 
-factory = functionsjs.getFactoryInstance();
-factory.basePATH = "test/functions";
-
-factory.scanAsync(function(errScan, dataScan){
-    if (errScan){
-        console.log(errScan);
+server.factory.scan(function(err, dataScan){
+    if (err){
+        console.error(err);
     }
     else{
         console.log(new Date() + " - " + dataScan + " functions loaded");
 
-        factory.invoke("sum", "v1", {x:5,y:5}, function(){}, function(err, result){
+        server.factory.invoke("sum", "v1", {x:5,y:5}, function(){}, function(err, result){
             if (err){
                 console.log("Err => ");
                 console.log(err);

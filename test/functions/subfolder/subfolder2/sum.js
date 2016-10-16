@@ -1,6 +1,8 @@
 "use strict";
 
 module.info = {
+    name: "subfolder.subfolder.sum",
+    version: "v1",
     category: "test",
     description : "sum"
 };

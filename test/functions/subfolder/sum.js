@@ -1,8 +1,10 @@
 "use strict";
 
 module.info = {
+    name: "subfolder.sum",
+    version: "v1",
     category: "test",
-    description : "multiply"
+    description : "sum"
 };
 
 module.input = {
@@ -14,5 +16,5 @@ module.output = {
 };
 
 module.exports = function(context, message, callBack){
-    callBack(null, message.x * message.y);
+    callBack(null, message.x + message.y);
 };

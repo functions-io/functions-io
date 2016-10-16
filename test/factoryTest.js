@@ -1,19 +1,17 @@
 var functionsjs = require("../");
 var assert = require("assert");
-var factory;
 var functionManager;
 
-factory = functionsjs.getFactoryInstance();
-factory.basePATH = "test/functions";
+var server = functionsjs.createServer({path:"test/functions"});
 
-factory.scanAsync(function(errScan, dataScan){
+server.factory.scan(function(errScan, dataScan){
     if (errScan){
         console.log(errScan);
     }
     else{
         console.log(new Date() + " - " + dataScan + " functions loaded");
 
-        functionManager = factory.getFunctionManager("sum", "v1");
+        functionManager = server.factory.getFunctionManager("sum", "v1");
 
         assert.equal(functionManager.module.info.category, "test");
         assert.equal(functionManager.module.info.description, "sum");
@@ -29,7 +27,7 @@ factory.scanAsync(function(errScan, dataScan){
             assert.equal(data, 5);
         });
 
-        factory.invoke("sum", "v1", {x:2,y:3}, function(){}, function(err, data){
+        server.factory.invoke("sum", "v1", {x:2,y:3}, function(){}, function(err, data){
             assert.equal(err, null);
             assert.equal(data, 5);
         });

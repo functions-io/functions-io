@@ -5,7 +5,17 @@ Minimalist functional framework for [node](http://nodejs.org).
 
 ```javascript
 var functionsjs = require("functions-io");
-functionsjs.listen();
+var server = functionsjs.createServer();
+
+server.factory.scan(function(err){
+    if (err){
+        console.error(err);
+    }
+    else{
+        server.listen(8080);
+    }
+});
+
 ```
 
 ## Installation

@@ -1,21 +1,17 @@
 var functionsjs = require("../");
 var http = require("http");
 var serverHTTP = null;
-var factory = null;
 
-factory = functionsjs.getFactoryInstance();
-factory.basePATH = "test/functions";
+var server = functionsjs.createServer({path:"test/functions"});
 
-factory.scanAsync(function(errScan, dataScan){
-    if (errScan){
-        console.error(errScan);
+server.factory.scan(function(err, dataScan){
+    if (err){
+        console.error(err);
     }
     else{
         console.log(new Date() + " - " + dataScan + " functions loaded");
 
-        serverHTTP = http.createServer(function(req, res){
-            functionsjs.httpInvokeFunctionsServer(factory, req, res);
-        });
+        serverHTTP = http.createServer(server.processRequestHTTP);
 
         serverHTTP.listen(8080, function(){
             console.log("HTTP Listen in port 8080");

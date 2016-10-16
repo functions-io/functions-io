@@ -1,6 +1,8 @@
 "use strict";
 
 module.info = {
+    name: "sum",
+    version: "v2",
     category: "test",
     description : "sum"
 };
