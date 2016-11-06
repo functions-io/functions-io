@@ -1,13 +1,12 @@
 var fs = require("fs");
 var path = require("path");
-
 var contentTypeByExtension = {};
 contentTypeByExtension[".HTML"] = "text/html;charset=utf-8";
-contentTypeByExtension[".JS"] = "application/javascript; charset=utf-8"; 
-contentTypeByExtension[".CSS"] = "text/css"; 
-contentTypeByExtension[".PNG"] = "image/png"; 
+contentTypeByExtension[".JS"] = "application/javascript; charset=utf-8";
+contentTypeByExtension[".CSS"] = "text/css";
+contentTypeByExtension[".PNG"] = "image/png";
 
-module.exports = function(context, basePATH, req, res){
+function processFiles(context, basePATH, req, res){
     var uri;
     var responseContentType;
     var fileExtension;
@@ -52,4 +51,20 @@ module.exports = function(context, basePATH, req, res){
         res.writeHead(500, {"Content-Type": "text/html"});
         res.end(err.message);
     }
+}
+
+module.exports = function(req, res, next){
+    if (req.headers["content-type"] !== "application/json"){
+        if (req.url.indexOf("/admin") === 0){
+            processFiles("/admin", "htmlFiles", req, res);
+            return;
+        }
+        else if (req.url === "/"){
+            res.writeHead(301, {"Location": "/admin"});
+            res.end();
+            return;
+        }
+    }
+    
+    next();
 };
