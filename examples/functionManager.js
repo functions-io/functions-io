@@ -1,15 +1,15 @@
-var functionsjs = require("../");
-var server = functionsjs.createServer({path:"test/functions"});
-var functionManager;
+var functionsio = require("../");
+var app = functionsio({path:"test/functions"});
 
-server.factory.scan(function(err, dataScan){
+app.start(function(err, dataScan){
     if (err){
         console.error(err);
     }
     else{
         console.log(new Date() + " - " + dataScan + " functions loaded");
 
-        functionManager = server.factory.getFunctionManager("sum", "v1");
+        var functionManager = app.factory.getFunctionManager(null, "sum", "v1");
+        
         console.log(JSON.stringify(functionManager.module, null, "\t"));
     }
 });

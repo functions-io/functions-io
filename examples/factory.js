@@ -1,14 +1,14 @@
-var functionsjs = require("../");
-var server = functionsjs.createServer({path:"test/functions"});
+var functionsio = require("../");
+var app = functionsio({path:"test/functions"});
 
-server.factory.scan(function(err, dataScan){
+app.start(function(err, dataScan){
     if (err){
         console.error(err);
     }
     else{
         console.log(new Date() + " - " + dataScan + " functions loaded");
 
-        server.factory.invoke("sum", "v1", {x:5,y:5}, function(){}, function(err, result){
+        app.factory.invoke(null, "sum", "v1", {x:5,y:5}, function(){}, function(err, result){
             if (err){
                 console.log("Err => ");
                 console.log(err);

@@ -1,11 +1,9 @@
 "use strict";
 
-module.info = {
-    name: "subfolder.subfolder.sum",
-    version: "v1",
-    category: "test",
-    description : "sum"
-};
+module.name = "subfolder.subfolder.sum";
+module.version = "v1";
+module.category = "test";
+module.description = "sum";
 
 module.input = {
     x:{type:"number", required:true},

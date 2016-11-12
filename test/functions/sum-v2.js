@@ -1,11 +1,9 @@
 "use strict";
 
-module.info = {
-    name: "sum",
-    version: "v2",
-    category: "test",
-    description : "sum"
-};
+module.name = "sum";
+module.version = "v2";
+module.category = "test";
+module.description = "sum";
 
 module.input = {
     x:{type:"number", required:false},

@@ -1,11 +1,9 @@
 "use strict";
 
-module.info = {
-    name: "subfolder.subfolder.multiply",
-    version: "v1",
-    category: "test",
-    description : "multiply"
-};
+module.name = "subfolder.subfolder.multiply";
+module.version = "v1";
+module.category = "test";
+module.description = "multiply";
 
 module.input = {
     x:{type:"number", required:true},
