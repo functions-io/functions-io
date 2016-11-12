@@ -1,4 +1,4 @@
-var functionsjs = require("../");
-var server = functionsjs.createServer({path:"test/functions"});
+var functionsio = require("../");
+var app = functionsio({path:"test/functions"});
 
-server.start(8080);
+app.listen(8080);
