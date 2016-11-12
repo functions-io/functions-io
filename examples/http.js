@@ -1,20 +1,25 @@
-var functionsjs = require("../");
+var functionsio = require("../");
+var app = functionsio({path:"test/functions"});
 var http = require("http");
-var serverHTTP = null;
 
-var server = functionsjs.createServer({path:"test/functions"});
-
-server.factory.scan(function(err, dataScan){
+app.start(function(err, dataScan){
     if (err){
         console.error(err);
     }
     else{
         console.log(new Date() + " - " + dataScan + " functions loaded");
 
-        serverHTTP = http.createServer(server.processRequestHTTP);
+        app.serverHTTP = http.createServer(app.processRequestHTTP);
 
-        serverHTTP.listen(8080, function(){
-            console.log("HTTP Listen in port 8080");
+        app.factory.invoke(null, "sum", "v1", {x:5,y:5}, function(){}, function(err, result){
+            if (err){
+                console.log("Err => ");
+                console.log(err);
+            }
+            else{
+                console.log("Resp => ");
+                console.log(result);
+            }
         });
     }
 });

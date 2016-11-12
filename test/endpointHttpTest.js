@@ -1,9 +1,9 @@
-var functionsjs = require("../");
+var functionsio = require("../");
 var assert = require("assert");
-var port = 8187;
+var port = null;
 var host = "127.0.0.1";
 var http = require("http");
-var server = functionsjs.createServer({path:"test/functions"});
+var app = functionsio({path:"test/functions", autoScan: false});
 
 function httpPost(messageType, path, data, callBack){
     var options = {
@@ -38,12 +38,13 @@ function httpPost(messageType, path, data, callBack){
 }
 
 try{
-    server.factory.scan(function(err){
+    app.listen(function(err){
         if (err){
             console.error(err);
         }
         else{
-            server.listen(port);
+            port = app.serverHTTPListen.address().port;
+            console.log("Listen in port " + port);
             test1();
         }
     });
@@ -54,8 +55,8 @@ catch(err){
 }
 
 function fim(){
-    if (server){
-        server.serverHTTP.close();
+    if (app){
+        app.serverHTTP.close();
     }
 }
 
@@ -77,7 +78,7 @@ function test2(){
 }
 
 function test3(){
-    httpPost("application/json", "/methodNotExist/v1", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
+    httpPost("application/json", "/methodNotExist", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
         assert.equal(errHTTPCode, 404);
         assert.equal(data.error.code, -32601); //Method not found
         

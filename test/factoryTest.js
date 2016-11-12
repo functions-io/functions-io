@@ -1,20 +1,19 @@
-var functionsjs = require("../");
+var functionsio = require("../");
+var app = functionsio({path:"test/functions", autoScan: false});
 var assert = require("assert");
 var functionManager;
 
-var server = functionsjs.createServer({path:"test/functions"});
-
-server.factory.scan(function(errScan, dataScan){
-    if (errScan){
-        console.log(errScan);
+app.start(function(err, dataScan){
+    if (err){
+        console.error(err);
     }
     else{
         console.log(new Date() + " - " + dataScan + " functions loaded");
 
-        functionManager = server.factory.getFunctionManager("sum", "v1");
+        functionManager = app.factory.getFunctionManager(null, "sum", "v1");
 
-        assert.equal(functionManager.module.info.category, "test");
-        assert.equal(functionManager.module.info.description, "sum");
+        assert.equal(functionManager.module.category, "test");
+        assert.equal(functionManager.module.description, "sum");
         assert.equal(functionManager.module.input.x.type, "number");
         assert.equal(functionManager.module.input.x.required, true);
         assert.equal(functionManager.module.input.y.type, "number");
@@ -27,9 +26,10 @@ server.factory.scan(function(errScan, dataScan){
             assert.equal(data, 5);
         });
 
-        server.factory.invoke("sum", "v1", {x:2,y:3}, function(){}, function(err, data){
+        app.factory.invoke(null, "sum", "v1", {x:2,y:3}, function(){}, function(err, data){
             assert.equal(err, null);
-            assert.equal(data, 5);
+            console.log("data => " + data);
+            assert.strictEqual(data, 5, "igual");
         });
     }
 });
