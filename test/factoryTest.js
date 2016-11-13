@@ -14,6 +14,10 @@ app.start(function(err, dataScan){
         assert.equal(functionManager.module.category, "sys");
         assert.equal(functionManager.module.description, "catalog");
         assert.equal(typeof functionManager.module.exports, "function");
+        functionManager.module.exports(null, {}, function(err, data){
+            assert.equal(err, null);
+            //assert.equal(data, 5);
+        });
 
         functionManager = app.factory.getFunctionManager(null, "subfolder.subfolder2.sum", "v1");
         assert.equal(functionManager.module.category, "test");
