@@ -4,18 +4,10 @@
 Minimalist functional framework for [node](http://nodejs.org).
 
 ```javascript
-var functionsjs = require("functions-io");
-var server = functionsjs.createServer();
+var functionsio = require("functions-io");
+var app = functionsio({path:"test/functions"});
 
-server.factory.scan(function(err){
-    if (err){
-        console.error(err);
-    }
-    else{
-        server.listen(8080);
-    }
-});
-
+app.listen(8080);
 ```
 
 ## Installation
