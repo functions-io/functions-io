@@ -10,6 +10,11 @@ app.start(function(err, dataScan){
     else{
         console.log(new Date() + " - " + dataScan + " functions loaded");
 
+        functionManager = app.factory.getFunctionManager(null, "sys.catalog", null);
+        assert.equal(functionManager.module.category, "sys");
+        assert.equal(functionManager.module.description, "catalog");
+        assert.equal(typeof functionManager.module.exports, "function");
+
         functionManager = app.factory.getFunctionManager(null, "subfolder.subfolder2.sum", "v1");
         assert.equal(functionManager.module.category, "test");
         assert.equal(functionManager.module.description, "sum");
