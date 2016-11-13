@@ -1,6 +1,6 @@
 "use strict";
 
-module.name = "subfolder.subfolder.multiply";
+module.name = "subfolder.subfolder2.multiply";
 module.version = "v1";
 module.category = "test";
 module.description = "multiply";

@@ -56,7 +56,7 @@ catch(err){
 
 function fim(){
     if (app){
-        app.serverHTTP.close();
+        app.stop();
     }
 }
 
