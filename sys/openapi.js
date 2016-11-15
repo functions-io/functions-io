@@ -11,101 +11,100 @@ module.input = {
     category:{type:"string", required:false}
 };
 
-function parse_verb_get(itemFunctionManager){
-    var openapi = {};
-    var keys = null;
-    var item;
-
-    /*
-    newItemCatalog = {};
-    newItemCatalog.stage = item.stage;
-    newItemCatalog.name = item.name;
-    newItemCatalog.version = item.version;
-    newItemCatalog.description = item.description;
-    newItemCatalog.input = item.module.input;
-    newItemCatalog.output = item.module.output;
-    */
-
-/*
-"name": "size", 
-        "in": "query",
-        "description": "Size of array",
-        "required": true,
-        "type": "number",
-        "format": "double"
-
-module.input = {
-    x:{type:"number", required:true},
-    y:{type:"number", required:true},
-    generic:{type:"number", required:true, format: "double"}
-};
-*/
-
-    openapi.get = {};
-    openapi.get.description = itemFunctionManager.module.description;
-    openapi.parameters = [];
-
-    keys = Object.keys(itemFunctionManager.module.input);
-    for (var i = 0; i < keys.length; i++){
-        item = itemFunctionManager.module.input[keys[i]];
-        
-        var itemNewParam = {};
-        itemNewParam.in = "query";
-        itemNewParam.name = keys[i];
-        itemNewParam.type = item.type;
-        itemNewParam.required = item.required;
-        itemNewParam.format = item.format;
-        itemNewParam.description = item.description;
-
-        openapi.parameters.push(itemNewParam);
-    }
-
-    /*
-    openapi.parameters.push({
-        "name": "size", 
-        "in": "query",
-        "description": "Size of array",
-        "required": true,
-        "type": "number",
-        "format": "double"
-    });
-    */
-
-    openapi.responses = {};
-    openapi.responses[200] = {};
-    openapi.responses[200].description = "Successful response";
-    openapi.responses[200].schema = {};
-    openapi.responses[200].schema.title = "ArrayOfPersons";
-    openapi.responses[200].schema.type = "array";
-    openapi.responses[200].schema.items = {};
-    openapi.responses[200].schema.items.title = "Person";
-    openapi.responses[200].schema.items.type = "object";
-    openapi.responses[200].schema.items.properties = {};
-    openapi.responses[200].schema.items.properties.name = {};
-    openapi.responses[200].schema.items.properties.name.type = "string";
-    openapi.responses[200].schema.items.properties.single = {};
-    openapi.responses[200].schema.items.properties.single.type = "boolean";
-
-    return openapi;
-};
+//***********************  TODO
+//replace all todos os files propertie por property
+//******************
 
 function getSpec(){
     var specOpenApi = {};
     var listCatalog = [];
-    var item;
     var keys;
-
+    
     specOpenApi.swagger = "2.0";
+    //specOpenApi.host = "";
+    //specOpenApi.basePath = "";
     specOpenApi.info = {};
     specOpenApi.info.version = "0.0.0";
     specOpenApi.info.title = "functions-io";
     specOpenApi.paths = {};
+    specOpenApi.definitions = {}; 
 
     keys = Object.keys(module._factory.listFunctionManager);
     for (var i = 0; i < keys.length; i++){
-        item = module._factory.listFunctionManager[keys[i]];
+        (function(itemFunctionManager){
+            var keysInput;
+            var keysOutput;
+            var newDefinition;
+            var itemNewDefinition = {};
+            var openapi_get = {};
 
-        specOpenApi.paths["/" + item.name + "/" + item.version] = parse_verb_get(item);
+            openapi_get.tags = [itemFunctionManager.module.category]
+            openapi_get.description = itemFunctionManager.module.description;
+            openapi_get.consumes = ["application/json"];
+            openapi_get.produces = ["application/json"];
+
+            //parameters
+            openapi_get.parameters = [];
+            if (itemFunctionManager.module.input){
+                keysInput = Object.keys(itemFunctionManager.module.input);
+                for (var i_input = 0; i_input < keysInput.length; i_input++){
+                    (function(parameters, itemInput, inputName){
+                        var itemNewParam = {};
+                        itemNewParam.in = "query";
+                        itemNewParam.name = inputName;
+                        itemNewParam.type = itemInput.type;
+                        if (itemInput.required){
+                            itemNewParam.required = itemInput.required;
+                        }
+                        if (itemInput.format){
+                            itemNewParam.format = itemInput.format;
+                        }
+                        if (itemInput.description){
+                            itemNewParam.description = itemInput.description;
+                        }
+                        parameters.push(itemNewParam);
+                    })(openapi_get.parameters, itemFunctionManager.module.input[keysInput[i_input]], keysInput[i_input]);
+                }
+            }
+
+
+            openapi_get.responses = {};
+            openapi_get.responses[200] = {};
+            openapi_get.responses[200].description = "Successful response";
+            
+            if (itemFunctionManager.module.output){
+                keysOutput = Object.keys(itemFunctionManager.module.output);
+
+                openapi_get.responses[200].schema = {};
+                openapi_get.responses[200].schema["$ref"] = "#/definitions/" + itemFunctionManager.key;    
+                itemNewDefinition = {};
+                itemNewDefinition.type = "object";
+                itemNewDefinition.required = [];
+                itemNewDefinition.properties = {};
+                
+                for (var i_output = 0; i_output < keysOutput.length; i_output++){
+                    (function(properties, itemOutput, outputName){
+                        var itemNewProperty = {};
+                        itemNewProperty.type = itemOutput.type;
+                        if (itemOutput.format){
+                            itemNewProperty.format = itemOutput.format;
+                        }
+                        if (itemOutput.description){
+                            itemNewProperty.description = itemOutput.description;    
+                        }
+                        if (itemOutput.required){
+                            itemNewDefinition.required.push(outputName);
+                        }
+                        /*"Pets": {"type": "array","items": {"$ref": "#/definitions/Pet"}},*/
+                        
+                        properties[outputName] = itemNewProperty;
+                    })(itemNewDefinition.properties, itemFunctionManager.module.output[keysOutput[i_output]], keysOutput[i_output]);
+                }
+                specOpenApi.definitions[itemFunctionManager.key] = itemNewDefinition; 
+            }
+
+            specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {get: openapi_get};
+        })(module._factory.listFunctionManager[keys[i]]);
     }
 
     return specOpenApi;

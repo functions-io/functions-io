@@ -2,17 +2,17 @@
 
 module.name = "subfolder.subfolder2.multiply";
 module.version = "v1";
-module.category = "test";
+module.category = "test2";
 module.description = "multiply";
 
 module.input = {
-    x:{type:"number", required:true},
-    y:{type:"number", required:false}
+    x:{type:"integer", required:true},
+    y:{type:"integer", required:false}
 };
 module.output = {
-    type:"number"
+    value:{type:"integer"}
 };
 
 module.exports = function(context, message, callBack){
-    callBack(null, message.x * message.y);
+    callBack(null, {value: message.x * message.y});
 };

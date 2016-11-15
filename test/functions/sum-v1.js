@@ -5,15 +5,17 @@ module.version = "v1";
 module.category = "test";
 module.description = "sum";
 
+//generic:{type:"integer", required:true, format: "double", description: "par generic"}
+
 module.input = {
-    x:{type:"number", required:true},
-    y:{type:"number", required:true},
-    generic:{type:"number", required:true, format: "double", description: "par generic"}
+    x:{type:"integer", required:true},
+    y:{type:"integer", required:true},
+    generic:{type:"integer", required:true, format: "double", description: "par generic"}
 };
 module.output = {
-    type:"number"
+    value:{type:"integer"}
 };
 
 module.exports = function(context, message, callBack){
-    callBack(null, message.x + message.y);
+    callBack(null, {value: message.x + message.y});
 };

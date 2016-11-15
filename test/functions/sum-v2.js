@@ -6,13 +6,13 @@ module.category = "test";
 module.description = "sum";
 
 module.input = {
-    x:{type:"number", required:false},
-    y:{type:"number", required:false}
+    x:{type:"integer", required:false},
+    y:{type:"integer", required:false}
 };
 module.output = {
-    type:"number"
+    value:{type:"integer"}
 };
 
 module.exports = function(context, message, callBack){
-    callBack(null, message.x + message.y);
+    callBack(null, {value: message.x + message.y});
 };
