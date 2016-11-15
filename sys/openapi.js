@@ -1,15 +1,10 @@
 "use strict";
 
 module.returnType = "HTTP";
-module.name = "sys.openapi";
+module.name = "swagger.json";
 module.category = "sys";
-module.description = "openapi";
-
-module.input = {
-    stage:{type:"string", required:false},
-    name:{type:"string", required:false},
-    category:{type:"string", required:false}
-};
+module.summary = "swagger.json";
+module.description = "return swagger.json";
 
 //***********************  TODO
 //replace all todos os files propertie por property
@@ -38,8 +33,15 @@ function getSpec(){
             var itemNewDefinition = {};
             var openapi_get = {};
 
-            openapi_get.tags = [itemFunctionManager.module.category]
-            openapi_get.description = itemFunctionManager.module.description;
+            if (itemFunctionManager.module.category){
+                openapi_get.tags = [itemFunctionManager.module.category]
+            }
+            if (itemFunctionManager.module.summary){
+                openapi_get.summary = itemFunctionManager.module.summary;
+            }
+            if (itemFunctionManager.module.description){
+                openapi_get.description = itemFunctionManager.module.description;
+            }
             openapi_get.consumes = ["application/json"];
             openapi_get.produces = ["application/json"];
 

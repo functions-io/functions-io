@@ -3,7 +3,8 @@
 module.name = "sum";
 module.version = "v1";
 module.category = "test";
-module.description = "sum";
+module.summary = "sum"
+module.description = "sum x + y";
 
 //generic:{type:"integer", required:true, format: "double", description: "par generic"}
 

@@ -3,7 +3,8 @@
 module.name = "multiply";
 module.version = "v1";
 module.category = "test";
-module.description = "multiply";
+module.summary = "multiply"
+module.description = "multiply x * y";
 
 module.input = {
     x:{type:"integer", required:true},

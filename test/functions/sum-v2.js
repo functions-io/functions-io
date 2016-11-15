@@ -3,7 +3,8 @@
 module.name = "sum";
 module.version = "v2";
 module.category = "test";
-module.description = "sum";
+module.summary = "sum"
+module.description = "sum x + y";
 
 module.input = {
     x:{type:"integer", required:false},

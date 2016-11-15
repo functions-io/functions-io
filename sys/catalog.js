@@ -2,7 +2,8 @@
 
 module.name = "sys.catalog";
 module.category = "sys";
-module.description = "catalog";
+module.summary = "catalog";
+module.description = "return catalog";
 
 module.input = {
     stage:{type:"string", required:false},
