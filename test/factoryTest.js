@@ -12,11 +12,19 @@ app.start(function(err, dataScan){
 
         functionManager = app.factory.getFunctionManager(null, "sys.catalog", null);
         assert.equal(functionManager.module.category, "sys");
-        assert.equal(functionManager.module.description, "catalog");
         assert.equal(typeof functionManager.module.exports, "function");
         functionManager.module.exports(null, {}, function(err, data){
             assert.equal(err, null);
-            //assert.equal(data, 5);
+        });
+
+        functionManager = app.factory.getFunctionManager(null, "sys.openapi", null);
+        assert.equal(functionManager.module.category, "sys");
+        assert.equal(typeof functionManager.module.exports, "function");
+        functionManager.module.exports(null, {}, function(err, data){
+            assert.equal(err, null);
+            assert.equal(data.code, 200);
+            assert.equal(data.contentType, "application/json");
+            assert.equal(typeof(data.body), "string");
         });
 
         functionManager = app.factory.getFunctionManager(null, "subfolder.subfolder2.sum", "v1");
