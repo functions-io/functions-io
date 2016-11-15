@@ -120,10 +120,7 @@ module.exports = function(context, message, callBack){
     response.code = 200;
     response.headers = {};
     response.headers["Content-Type"] = "application/json";
-    response.headers["Access-Control-Allow-Headers"] = "Content-Type, api_key, Authorization, x-requested-with, Total-Count, Total-Pages, Error-Message";
-    response.headers["Access-Control-Allow-Methods"] = "POST, GET, DELETE, PUT, OPTIONS";
-    response.headers["Access-Control-Allow-Origin"] = "*";
-
+    
     response.body = JSON.stringify(spec);
 
     callBack(null, response);

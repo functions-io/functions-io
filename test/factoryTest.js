@@ -23,7 +23,6 @@ app.start(function(err, dataScan){
         functionManager.module.exports(null, {}, function(err, data){
             assert.equal(err, null);
             assert.equal(data.code, 200);
-            assert.equal(data.contentType, "application/json");
             assert.equal(typeof(data.body), "string");
         });
 
