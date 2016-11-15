@@ -7,7 +7,8 @@ module.description = "sum";
 
 module.input = {
     x:{type:"number", required:true},
-    y:{type:"number", required:true}
+    y:{type:"number", required:true},
+    generic:{type:"number", required:true, format: "double", description: "par generic"}
 };
 module.output = {
     type:"number"
