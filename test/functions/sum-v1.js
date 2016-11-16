@@ -6,12 +6,9 @@ module.category = "test";
 module.summary = "sum"
 module.description = "sum x + y";
 
-//generic:{type:"integer", required:true, format: "double", description: "par generic"}
-
 module.input = {
     x:{type:"integer", required:true},
-    y:{type:"integer", required:true},
-    generic:{type:"integer", required:true, format: "double", description: "par generic"}
+    y:{type:"integer", required:true}
 };
 module.output = {
     value:{type:"integer"}

@@ -119,7 +119,7 @@ function getSpec(){
                     itemNewDefinitionOutput.properties = {};
                     itemNewDefinitionOutput.properties["id"] = {type: "integer", description: "correlation id"};
                     itemNewDefinitionOutput.properties["result"] = {"$ref": "out_" + itemFunctionManager.key};
-                    itemNewDefinitionOutput.properties["error"] = {};
+                    itemNewDefinitionOutput.properties["error"] = {type: "string", description: "description error"};
 
                     specOpenApi.definitions["out_msg_" + itemFunctionManager.key] = itemNewDefinitionOutput;
                 })();
