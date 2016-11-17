@@ -10,6 +10,81 @@ module.description = "return swagger.json";
 //replace all todos os files propertie por property
 //******************
 
+function getDefinitionMessageResponse(refDefinition){
+    var itemNewDefinition = {};
+    
+    itemNewDefinition.type = "object";
+    itemNewDefinition.properties = {};
+    itemNewDefinition.properties["id"] = {type: "integer", description: "correlation id"};
+    itemNewDefinition.properties["result"] = {"$ref": refDefinition};
+    itemNewDefinition.properties["error"] = {type: "string", description: "description error"};
+
+    return itemNewDefinition;
+}
+
+function getDefinition(ObjectItem){
+    var keys = Object.keys(ObjectItem);
+    var definition = {};
+
+    definition.type = "object";
+    definition.required = [];
+    definition.properties = {};
+
+    for (var i = 0; i < keys.length; i++){
+        (function(item, name){
+            var itemNewProperty = {};
+
+            itemNewProperty.type = item.type;
+            if (item.format){
+                itemNewProperty.format = item.format;
+            }
+            if (item.description){
+                itemNewProperty.description = itemOutput.description;    
+            }
+            if (item.required){
+                definition.required.push(name);
+            }
+            /*"Pets": {"type": "array","items": {"$ref": "#/definitions/Pet"}},*/
+            
+            definition.properties[name] = itemNewProperty;
+        })(ObjectItem[keys[i]], keys[i]);
+    }
+
+    return definition;
+}
+
+function getParameters(ObjectItem){
+    var keys = Object.keys(ObjectItem);
+    var parameters = [];
+
+    for (var i = 0; i < keys.length; i++){
+        (function(itemInput, inputName){
+            var itemNewParam = {};
+            
+            itemNewParam.in = "query";
+            itemNewParam.name = inputName;
+            
+            itemNewParam.type = itemInput.type;
+
+            if (itemInput.required){
+                itemNewParam.required = itemInput.required;
+            }
+
+            if (itemInput.format){
+                itemNewParam.format = itemInput.format;
+            }
+
+            if (itemInput.description){
+                itemNewParam.description = itemInput.description;
+            }
+
+            parameters.push(itemNewParam);
+        })(ObjectItem[keys[i]], keys[i]);
+    }
+
+    return parameters;
+}
+
 function getSpec(){
     var specOpenApi = {};
     var listCatalog = [];
@@ -27,11 +102,7 @@ function getSpec(){
     keys = Object.keys(module._factory.listFunctionManager);
     for (var i = 0; i < keys.length; i++){
         (function(itemFunctionManager){
-            var keysInput;
-            var keysOutput;
             var newDefinition;
-            var itemNewDefinitionInput = {};
-            var itemNewDefinitionOutput = {};
             var openapi_get = {};
             var openapi_post = {};
 
@@ -55,46 +126,13 @@ function getSpec(){
             //parameters
             openapi_get.parameters = [];
             openapi_post.parameters = [];
-            if (itemFunctionManager.module.input){
-                keysInput = Object.keys(itemFunctionManager.module.input);
 
-                itemNewDefinitionInput = {};
-                itemNewDefinitionInput.type = "object";
-                itemNewDefinitionInput.required = [];
-                itemNewDefinitionInput.properties = {};
+            if (itemFunctionManager.module.input){
+                openapi_get.parameters = getParameters(itemFunctionManager.module.input);
 
                 openapi_post.parameters.push({"name": "in_" + itemFunctionManager.key, "in": "body", "required": true, "schema": {"$ref": "#/definitions/in_" + itemFunctionManager.key}});
-                for (var i_input = 0; i_input < keysInput.length; i_input++){
-                    (function(properties, parameters_get, itemInput, inputName){
-                        var itemNewParam_get = {};
-                        var itemNewProperty = {};
-                        
-                        itemNewParam_get.in = "query";
-                        itemNewParam_get.name = inputName;
-                        
-                        itemNewParam_get.type = itemInput.type;
-                        itemNewProperty.type = itemInput.type;
-
-                        if (itemInput.required){
-                            itemNewParam_get.required = itemInput.required;
-                            itemNewDefinitionInput.required.push(inputName);
-                        }
-
-                        if (itemInput.format){
-                            itemNewParam_get.format = itemInput.format;
-                            itemNewProperty.format = itemInput.format;
-                        }
-
-                        if (itemInput.description){
-                            itemNewParam_get.description = itemInput.description;
-                            itemNewProperty.description = itemInput.description;
-                        }
-
-                        parameters_get.push(itemNewParam_get);
-                        properties[inputName] = itemNewProperty;
-                    })(itemNewDefinitionInput.properties, openapi_get.parameters, itemFunctionManager.module.input[keysInput[i_input]], keysInput[i_input]);
-                }
-                specOpenApi.definitions["in_" + itemFunctionManager.key] = itemNewDefinitionInput;
+                specOpenApi.definitions["in_" + itemFunctionManager.key] = getDefinition(itemFunctionManager.module.input);
+                
             }
 
             openapi_get.responses = {};
@@ -106,48 +144,13 @@ function getSpec(){
             openapi_post.responses[200].description = "Successful response";
             
             if (itemFunctionManager.module.output){
-                keysOutput = Object.keys(itemFunctionManager.module.output);
-
                 openapi_get.responses[200].schema = {};
                 openapi_get.responses[200].schema["$ref"] = "#/definitions/out_msg_" + itemFunctionManager.key;    
                 openapi_post.responses[200].schema = {};
                 openapi_post.responses[200].schema["$ref"] = "#/definitions/out_msg_" + itemFunctionManager.key;
                 
-                (function(){
-                    var itemNewDefinitionOutput = {};
-                    itemNewDefinitionOutput.type = "object";
-                    itemNewDefinitionOutput.properties = {};
-                    itemNewDefinitionOutput.properties["id"] = {type: "integer", description: "correlation id"};
-                    itemNewDefinitionOutput.properties["result"] = {"$ref": "out_" + itemFunctionManager.key};
-                    itemNewDefinitionOutput.properties["error"] = {type: "string", description: "description error"};
-
-                    specOpenApi.definitions["out_msg_" + itemFunctionManager.key] = itemNewDefinitionOutput;
-                })();
-
-                itemNewDefinitionOutput = {};
-                itemNewDefinitionOutput.type = "object";
-                itemNewDefinitionOutput.required = [];
-                itemNewDefinitionOutput.properties = {};
-                
-                for (var i_output = 0; i_output < keysOutput.length; i_output++){
-                    (function(properties, itemOutput, outputName){
-                        var itemNewProperty = {};
-                        itemNewProperty.type = itemOutput.type;
-                        if (itemOutput.format){
-                            itemNewProperty.format = itemOutput.format;
-                        }
-                        if (itemOutput.description){
-                            itemNewProperty.description = itemOutput.description;    
-                        }
-                        if (itemOutput.required){
-                            itemNewDefinitionOutput.required.push(outputName);
-                        }
-                        /*"Pets": {"type": "array","items": {"$ref": "#/definitions/Pet"}},*/
-                        
-                        properties[outputName] = itemNewProperty;
-                    })(itemNewDefinitionOutput.properties, itemFunctionManager.module.output[keysOutput[i_output]], keysOutput[i_output]);
-                }
-                specOpenApi.definitions["out_" + itemFunctionManager.key] = itemNewDefinitionOutput; 
+                specOpenApi.definitions["out_msg_" + itemFunctionManager.key] = getDefinitionMessageResponse("out_" + itemFunctionManager.key);
+                specOpenApi.definitions["out_" + itemFunctionManager.key] = getDefinition(itemFunctionManager.module.output);
             }
 
             specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {get: openapi_get, post: openapi_post};
