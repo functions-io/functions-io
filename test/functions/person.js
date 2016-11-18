@@ -14,12 +14,11 @@ module.input = {
 module.output = {
     code:{type:"integer", required:true},
     name:{type:"string", required:true},
-    date:{type:"date", required:true}/*,
-    listChildren:{type:"array", required:true, itens: {
+    date:{type:"date", required:true},
+    listChildren:{type:"array", required:true, items: {
         code:{type:"integer", required:true},
         name:{type:"string", required:true}        
     }}
-    */
 };
 
 module.exports = function(context, message, callBack){
@@ -27,7 +26,7 @@ module.exports = function(context, message, callBack){
     person.code = message.code;
     person.name = "person " + message.code;
     person.date = new Date();
-    person.date.listChildren = [{code: 1, name: "child 1"}, {code: 2, name: "child 2"}]
+    person.listChildren = [{code: 1, name: "child 1"}, {code: 2, name: "child 2"}]
     
     callBack(null, person);
 };

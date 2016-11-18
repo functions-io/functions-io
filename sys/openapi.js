@@ -22,7 +22,7 @@ function getDefinitionMessageResponse(refDefinition){
     return itemNewDefinition;
 }
 
-function getDefinition(ObjectItem){
+function addDefinition(definitions, definitionName, ObjectItem){
     var keys = Object.keys(ObjectItem);
     var definition = {};
 
@@ -35,22 +35,29 @@ function getDefinition(ObjectItem){
             var itemNewProperty = {};
 
             itemNewProperty.type = item.type;
-            if (item.format){
-                itemNewProperty.format = item.format;
+
+            if (itemNewProperty.type === "array"){
+                itemNewProperty.items = {};
+                itemNewProperty.items["$ref"] = "#/definitions/" + definitionName + "_" + name;
+                addDefinition(definitions, definitionName + "_" + name, item.items)
             }
-            if (item.description){
-                itemNewProperty.description = itemOutput.description;    
+            else{
+                if (item.format){
+                    itemNewProperty.format = item.format;
+                }
+                if (item.description){
+                    itemNewProperty.description = itemOutput.description;    
+                }
+                if (item.required){
+                    definition.required.push(name);
+                }
             }
-            if (item.required){
-                definition.required.push(name);
-            }
-            /*"Pets": {"type": "array","items": {"$ref": "#/definitions/Pet"}},*/
-            
+
             definition.properties[name] = itemNewProperty;
         })(ObjectItem[keys[i]], keys[i]);
     }
-
-    return definition;
+    
+    definitions[definitionName] = definition;
 }
 
 function getParameters(ObjectItem){
@@ -131,8 +138,7 @@ function getSpec(){
                 openapi_get.parameters = getParameters(itemFunctionManager.module.input);
 
                 openapi_post.parameters.push({"name": "in_" + itemFunctionManager.key, "in": "body", "required": true, "schema": {"$ref": "#/definitions/in_" + itemFunctionManager.key}});
-                specOpenApi.definitions["in_" + itemFunctionManager.key] = getDefinition(itemFunctionManager.module.input);
-                
+                addDefinition(specOpenApi.definitions, "in_type" + itemFunctionManager.key, itemFunctionManager.module.input);
             }
 
             openapi_get.responses = {};
@@ -145,12 +151,12 @@ function getSpec(){
             
             if (itemFunctionManager.module.output){
                 openapi_get.responses[200].schema = {};
-                openapi_get.responses[200].schema["$ref"] = "#/definitions/out_msg_" + itemFunctionManager.key;    
+                openapi_get.responses[200].schema["$ref"] = "#/definitions/out_msg_type" + itemFunctionManager.key;    
                 openapi_post.responses[200].schema = {};
-                openapi_post.responses[200].schema["$ref"] = "#/definitions/out_msg_" + itemFunctionManager.key;
+                openapi_post.responses[200].schema["$ref"] = "#/definitions/out_msg_type" + itemFunctionManager.key;
                 
-                specOpenApi.definitions["out_msg_" + itemFunctionManager.key] = getDefinitionMessageResponse("out_" + itemFunctionManager.key);
-                specOpenApi.definitions["out_" + itemFunctionManager.key] = getDefinition(itemFunctionManager.module.output);
+                specOpenApi.definitions["out_msg_type" + itemFunctionManager.key] = getDefinitionMessageResponse("out_type" + itemFunctionManager.key);
+                addDefinition(specOpenApi.definitions, "out_type" + itemFunctionManager.key, itemFunctionManager.module.output);
             }
 
             specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {get: openapi_get, post: openapi_post};
