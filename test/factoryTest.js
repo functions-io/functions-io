@@ -10,7 +10,7 @@ app.start(function(err, dataScan){
     else{
         console.log(new Date() + " - " + dataScan + " functions loaded");
 
-        functionManager = app.factory.getFunctionManager(null, "sys.catalog", null);
+        functionManager = app.factory.getFunctionManager(null, "sys.stats", null);
         assert.equal(functionManager.module.category, "sys");
         assert.equal(typeof functionManager.module.exports, "function");
         functionManager.module.exports(null, {}, function(err, data){

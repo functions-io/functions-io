@@ -42,6 +42,15 @@ function addDefinition(definitions, definitionName, ObjectItem){
             if (item.type === "array"){
                 itemNewProperty = {};
                 itemNewProperty.type = item.type;
+                if (item.minItems){
+                    itemNewProperty.minItems = item.minItems;    
+                }
+                if (item.maxItem){
+                    itemNewProperty.maxItem = item.maxItem;    
+                }
+                if (item.uniqueItems){
+                    itemNewProperty.uniqueItems = item.uniqueItems;    
+                }
                 itemNewProperty.items = {};
                 itemNewProperty.items["$ref"] = "#/definitions/" + definitionName + "_" + name;
                 addDefinition(definitions, definitionName + "_" + name, item.items)
@@ -73,6 +82,12 @@ function addDefinition(definitions, definitionName, ObjectItem){
                     }
                     if (item.pattern){
                         itemNewProperty.pattern = item.pattern;    
+                    }
+                    if (item.minLength){
+                        itemNewProperty.minLength = item.minLength;    
+                    }
+                    if (item.maxLength){
+                        itemNewProperty.maxLength = item.maxLength;    
                     }
                     if (item.format){
                         itemNewProperty.format = item.format;
@@ -193,7 +208,7 @@ function getSpec(){
                 openapi_post.responses[200].schema = {};
                 openapi_post.responses[200].schema["$ref"] = "#/definitions/type_out_msg_" + normalizedKey;
                 
-                specOpenApi.definitions["type_out_msg_" + normalizedKey] = getDefinitionMessageResponse("type_out_" + normalizedKey);
+                specOpenApi.definitions["type_out_msg_" + normalizedKey] = getDefinitionMessageResponse("#/definitions/type_out_" + normalizedKey);
                 addDefinition(specOpenApi.definitions, "type_out_" + normalizedKey, itemFunctionManager.module.output);
             }
 
