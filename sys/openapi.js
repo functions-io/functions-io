@@ -6,9 +6,14 @@ module.category = "sys";
 module.summary = "swagger.json";
 module.description = "return swagger.json";
 
+//types => integer, long, float, double, string, byte, binary, boolean, date, dateTime, password
 //***********************  TODO
 //replace all todos os files propertie por property
 //******************
+
+function getNormalizedName(name){
+    return name.replace(/[.-]/g,"_");
+}
 
 function getDefinitionMessageResponse(refDefinition){
     var itemNewDefinition = {};
@@ -32,32 +37,64 @@ function addDefinition(definitions, definitionName, ObjectItem){
 
     for (var i = 0; i < keys.length; i++){
         (function(item, name){
-            var itemNewProperty = {};
+            var itemNewProperty;
 
-            itemNewProperty.type = item.type;
-
-            if (itemNewProperty.type === "array"){
+            if (item.type === "array"){
+                itemNewProperty = {};
+                itemNewProperty.type = item.type;
                 itemNewProperty.items = {};
                 itemNewProperty.items["$ref"] = "#/definitions/" + definitionName + "_" + name;
                 addDefinition(definitions, definitionName + "_" + name, item.items)
+                definition.properties[name] = itemNewProperty;
+            }
+            if (item.type === "object"){
+                itemNewProperty = addDefinition(itemNewProperty, null, item.properties);
+                definition.properties[name] = itemNewProperty;
             }
             else{
-                if (item.format){
-                    itemNewProperty.format = item.format;
-                }
-                if (item.description){
-                    itemNewProperty.description = itemOutput.description;    
-                }
-                if (item.required){
-                    definition.required.push(name);
+                if (
+                    (item.type === "integer") || 
+                    (item.type === "long") ||
+                    (item.type === "float") ||
+                    (item.type === "double") ||
+                    (item.type === "string") ||
+                    (item.type === "byte") ||
+                    (item.type === "binary") ||
+                    (item.type === "boolean") ||
+                    (item.type === "date") ||
+                    (item.type === "dateTime") ||
+                    (item.type === "password")
+                    ){
+                    
+                    itemNewProperty = {};
+                    itemNewProperty.type = item.type;
+                    if (item.enum){
+                        itemNewProperty.enum = item.enum;    
+                    }
+                    if (item.pattern){
+                        itemNewProperty.pattern = item.pattern;    
+                    }
+                    if (item.format){
+                        itemNewProperty.format = item.format;
+                    }
+                    if (item.description){
+                        itemNewProperty.description = itemOutput.description;    
+                    }
+                    if (item.required){
+                        definition.required.push(name);
+                    }
+                    definition.properties[name] = itemNewProperty;
                 }
             }
-
-            definition.properties[name] = itemNewProperty;
         })(ObjectItem[keys[i]], keys[i]);
     }
     
-    definitions[definitionName] = definition;
+    if (definitionName){
+        definitions[definitionName] = definition;
+    }
+    else{
+        return definition;
+    }
 }
 
 function getParameters(ObjectItem){
@@ -109,6 +146,7 @@ function getSpec(){
     keys = Object.keys(module._factory.listFunctionManager);
     for (var i = 0; i < keys.length; i++){
         (function(itemFunctionManager){
+            var normalizedKey = getNormalizedName(itemFunctionManager.key);
             var newDefinition;
             var openapi_get = {};
             var openapi_post = {};
@@ -137,8 +175,8 @@ function getSpec(){
             if (itemFunctionManager.module.input){
                 openapi_get.parameters = getParameters(itemFunctionManager.module.input);
 
-                openapi_post.parameters.push({"name": "in_" + itemFunctionManager.key, "in": "body", "required": true, "schema": {"$ref": "#/definitions/in_" + itemFunctionManager.key}});
-                addDefinition(specOpenApi.definitions, "in_type" + itemFunctionManager.key, itemFunctionManager.module.input);
+                openapi_post.parameters.push({"name": "in_" + normalizedKey, "in": "body", "required": true, "schema": {"$ref": "#/definitions/type_in_" + normalizedKey}});
+                addDefinition(specOpenApi.definitions, "type_in_" + normalizedKey, itemFunctionManager.module.input);
             }
 
             openapi_get.responses = {};
@@ -151,12 +189,12 @@ function getSpec(){
             
             if (itemFunctionManager.module.output){
                 openapi_get.responses[200].schema = {};
-                openapi_get.responses[200].schema["$ref"] = "#/definitions/out_msg_type" + itemFunctionManager.key;    
+                openapi_get.responses[200].schema["$ref"] = "#/definitions/type_out_msg_" + normalizedKey;
                 openapi_post.responses[200].schema = {};
-                openapi_post.responses[200].schema["$ref"] = "#/definitions/out_msg_type" + itemFunctionManager.key;
+                openapi_post.responses[200].schema["$ref"] = "#/definitions/type_out_msg_" + normalizedKey;
                 
-                specOpenApi.definitions["out_msg_type" + itemFunctionManager.key] = getDefinitionMessageResponse("out_type" + itemFunctionManager.key);
-                addDefinition(specOpenApi.definitions, "out_type" + itemFunctionManager.key, itemFunctionManager.module.output);
+                specOpenApi.definitions["type_out_msg_" + normalizedKey] = getDefinitionMessageResponse("type_out_" + normalizedKey);
+                addDefinition(specOpenApi.definitions, "type_out_" + normalizedKey, itemFunctionManager.module.output);
             }
 
             specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {get: openapi_get, post: openapi_post};

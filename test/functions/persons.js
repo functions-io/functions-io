@@ -7,13 +7,15 @@ module.summary = "list persons"
 module.description = "list persons";
 
 module.input = {
-    name:{type:"string", required:true}
+    name:{type:"string", required:true},
+    sex:{type:"string", required:true, enum: ["Male", "Female"]}
 };
 module.output = {
     list:{type:"array", required:true, items: {
         code:{type:"integer", required:true},
         name:{type:"string", required:true},
         date:{type:"date", required:true},
+        sex:{type:"string", required:true, enum: ["Male", "Female"]},
         listChildren:{type:"array", required:true, items: {
             code:{type:"integer", required:true},
             name:{type:"string", required:true}        
@@ -28,16 +30,19 @@ module.exports = function(context, message, callBack){
     person1.code = 1;
     person1.name = "person 1";
     person1.date = new Date();
+    person1.sex = "Male";
     person1.listChildren = [{code: 1, name: "child 1"}, {code: 2, name: "child 2"}]
 
     person2.code = 2;
     person2.name = "person 2";
     person2.date = new Date();
+    person2.sex = "Female";
     person2.listChildren = [{code: 1, name: "child 1"}, {code: 2, name: "child 2"}]
 
     person3.code = 3;
     person3.name = "person 3";
     person3.date = new Date();
+    person3.sex = "Male";
     person3.listChildren = [{code: 1, name: "child 1"}, {code: 2, name: "child 2"}]
     
     persons.push(person1);
