@@ -3,6 +3,10 @@ var InputValidate = require("../lib/InputValidate");
 var inputValidate = new InputValidate();
 var now = new Date();
 
+function clone(obj){
+    return JSON.parse(JSON.stringify(obj));
+}
+
 var input1 = {
     code:{type:"integer", required:true},
     name:{type:"string", required:true},
@@ -47,8 +51,39 @@ var input2 = {
     }}
 };
 
+var input3 = {
+    code:{type:"integer", required:true},
+    date:{type:"date", required:true},
+    value:{type:"float", required:true},
+    listArray1:{type:"array", required:false, items: {
+        code:{type:"integer", required:true},
+        date:{type:"date", required:true},
+        value:{type:"float", required:true},
+        obj1:{type:"object", required:true, properties:{
+            code:{type:"integer", required:true},
+            date:{type:"date", required:true},
+            value:{type:"float", required:true}
+        }},
+    }},
+    obj1:{type:"object", required:true, properties:{
+        code:{type:"integer", required:true},
+        date:{type:"date", required:true},
+        value:{type:"float", required:true},
+        listArray1:{type:"array", required:false, items: {
+            code:{type:"integer", required:true},
+            date:{type:"date", required:true},
+            value:{type:"float", required:true},
+            obj1:{type:"object", required:true, properties:{
+                code:{type:"integer", required:true},
+                date:{type:"date", required:true},
+                value:{type:"float", required:true}
+            }},
+        }}
+    }},
+};
+
 var result = null;
-var data1 = null, data2 = null;
+var data1 = null, data2 = null, data3 = null;
 
 //
 //INPUT 1
@@ -201,6 +236,135 @@ assert.strictEqual(result.data.listArray2[1].code, 2);
 assert.strictEqual(result.data.listArray2[1].name, "name 2");
 assert.strictEqual(result.data.listArray2[1].date.getTime(), now.getTime());
 assert.strictEqual(result.data.listArray2[1].option, "Female");
+
+
+//
+//INPUT 3
+//
+data3 = {code: "1", date:now.toJSON(), value:"4.5"};
+data3.listArray1 = [];
+data3.listArray1.push({code: "1", date:now.toJSON(), value:"4.5"});
+data3.listArray1[0].obj1 = {code: "1", date:now.toJSON(), value:"4.5"}
+data3.obj1 = {code: "1", date:now.toJSON(), value:"4.5", listArray1:[]};
+data3.obj1.listArray1.push({code: "1", date:now.toJSON(), value:"4.5"});
+data3.obj1.listArray1[0].obj1 = {code: "1", date:now.toJSON(), value:"4.5"};
+
+result = inputValidate.parse("function1", data3, input3);
+
+assert.strictEqual(result.error, null);
+assert.strictEqual(result.data.code, 1);
+assert.strictEqual(result.data.date.getTime(), now.getTime());
+assert.strictEqual(result.data.value, 4.5);
+
+assert.strictEqual(result.data.listArray1[0].code, 1);
+assert.strictEqual(result.data.listArray1[0].date.getTime(), now.getTime());
+assert.strictEqual(result.data.listArray1[0].value, 4.5);
+
+assert.strictEqual(result.data.listArray1[0].obj1.code, 1);
+assert.strictEqual(result.data.listArray1[0].obj1.date.getTime(), now.getTime());
+assert.strictEqual(result.data.listArray1[0].obj1.value, 4.5);
+
+assert.strictEqual(result.data.obj1.code, 1);
+assert.strictEqual(result.data.obj1.date.getTime(), now.getTime());
+assert.strictEqual(result.data.obj1.value, 4.5);
+
+assert.strictEqual(result.data.obj1.listArray1[0].code, 1);
+assert.strictEqual(result.data.obj1.listArray1[0].date.getTime(), now.getTime());
+assert.strictEqual(result.data.obj1.listArray1[0].value, 4.5);
+
+assert.strictEqual(result.data.obj1.listArray1[0].obj1.code, 1);
+assert.strictEqual(result.data.obj1.listArray1[0].obj1.date.getTime(), now.getTime());
+assert.strictEqual(result.data.obj1.listArray1[0].obj1.value, 4.5);
+
+
+//
+//INPUT 1 + ERROR
+//
+var dataErr;
+//data1 = {code: 1, name: "name 1", date:now, value:4.5, option:"Male"};
+//data2 = {code: "1", name: "name 1", date:now.toJSON(), value:"4.5", option:"Male"};
+
+dataErr = clone(data1);
+delete dataErr.code;
+result = inputValidate.parse("function1", dataErr, input2);
+assert.strictEqual(result.error.name, "ValidateError");
+assert.strictEqual(result.error.message, "Value required");
+assert.strictEqual(result.error.code, 0);
+assert.strictEqual(result.error.functionName, "function1");
+assert.strictEqual(result.error.attributeName, "code");
+
+dataErr = clone(data1);
+dataErr.code = "abc";
+result = inputValidate.parse("function1", dataErr, input2);
+assert.strictEqual(result.error.name, "ValidateError");
+assert.strictEqual(result.error.message, "Value is not integer");
+assert.strictEqual(result.error.code, 1);
+assert.strictEqual(result.error.functionName, "function1");
+assert.strictEqual(result.error.attributeName, "code");
+
+dataErr = clone(data1);
+delete dataErr.name;
+result = inputValidate.parse("function1", dataErr, input2);
+assert.strictEqual(result.error.name, "ValidateError");
+assert.strictEqual(result.error.message, "Value required");
+assert.strictEqual(result.error.code, 0);
+assert.strictEqual(result.error.functionName, "function1");
+assert.strictEqual(result.error.attributeName, "name");
+
+dataErr = clone(data1);
+delete dataErr.date;
+result = inputValidate.parse("function1", dataErr, input2);
+assert.strictEqual(result.error.name, "ValidateError");
+assert.strictEqual(result.error.message, "Value required");
+assert.strictEqual(result.error.code, 0);
+assert.strictEqual(result.error.functionName, "function1");
+assert.strictEqual(result.error.attributeName, "date");
+
+dataErr = clone(data1);
+dataErr.date = "abc";
+result = inputValidate.parse("function1", dataErr, input2);
+assert.strictEqual(result.error.name, "ValidateError");
+assert.strictEqual(result.error.message, "Value is not date");
+assert.strictEqual(result.error.code, 1);
+assert.strictEqual(result.error.functionName, "function1");
+assert.strictEqual(result.error.attributeName, "date");
+
+dataErr = clone(data1);
+delete dataErr.value;
+result = inputValidate.parse("function1", dataErr, input2);
+assert.strictEqual(result.error.name, "ValidateError");
+assert.strictEqual(result.error.message, "Value required");
+assert.strictEqual(result.error.code, 0);
+assert.strictEqual(result.error.functionName, "function1");
+assert.strictEqual(result.error.attributeName, "value");
+
+dataErr = clone(data1);
+dataErr.value = "abc";
+result = inputValidate.parse("function1", dataErr, input2);
+assert.strictEqual(result.error.name, "ValidateError");
+assert.strictEqual(result.error.message, "Value is not float");
+assert.strictEqual(result.error.code, 1);
+assert.strictEqual(result.error.functionName, "function1");
+assert.strictEqual(result.error.attributeName, "value");
+
+dataErr = clone(data1);
+delete dataErr.option;
+result = inputValidate.parse("function1", dataErr, input2);
+assert.strictEqual(result.error.name, "ValidateError");
+assert.strictEqual(result.error.message, "Value required");
+assert.strictEqual(result.error.code, 0);
+assert.strictEqual(result.error.functionName, "function1");
+assert.strictEqual(result.error.attributeName, "option");
+
+dataErr = clone(data1);
+dataErr.option = "abc";
+result = inputValidate.parse("function1", dataErr, input2);
+assert.strictEqual(result.error.name, "ValidateError");
+assert.strictEqual(result.error.message, "Value is not in domain");
+assert.strictEqual(result.error.code, 2);
+assert.strictEqual(result.error.functionName, "function1");
+assert.strictEqual(result.error.attributeName, "option");
+
 
 //console.log(result);
 
