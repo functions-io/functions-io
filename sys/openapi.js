@@ -78,22 +78,22 @@ function addDefinition(definitions, definitionName, ObjectItem){
                     itemNewProperty = {};
                     itemNewProperty.type = item.type;
                     if (item.enum){
-                        itemNewProperty.enum = item.enum;    
+                        itemNewProperty.enum = item.enum;
                     }
                     if (item.pattern){
-                        itemNewProperty.pattern = item.pattern;    
+                        itemNewProperty.pattern = item.pattern.source;
                     }
                     if (item.minLength){
-                        itemNewProperty.minLength = item.minLength;    
+                        itemNewProperty.minLength = item.minLength;
                     }
                     if (item.maxLength){
-                        itemNewProperty.maxLength = item.maxLength;    
+                        itemNewProperty.maxLength = item.maxLength;
                     }
                     if (item.format){
                         itemNewProperty.format = item.format;
                     }
                     if (item.description){
-                        itemNewProperty.description = itemOutput.description;    
+                        itemNewProperty.description = itemOutput.description;
                     }
                     if (item.required){
                         definition.required.push(name);
@@ -212,7 +212,8 @@ function getSpec(){
                 addDefinition(specOpenApi.definitions, "type_out_" + normalizedKey, itemFunctionManager.module.output);
             }
 
-            specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {get: openapi_get, post: openapi_post};
+            //specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {get: openapi_get, post: openapi_post};
+            specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {post: openapi_post};
         })(module._factory.listFunctionManager[keys[i]]);
     }
 
