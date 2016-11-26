@@ -225,8 +225,9 @@ module.exports = function(context, message, callBack){
     var spec = null;
 
     spec = getSpec();
-    if ((message) && (message.header) && (message.header.mountpath)){
-        spec.basePath = message.header.mountpath;
+    
+    if (context.mountpath){
+        spec.basePath = context.mountpath;
     }
     
     response.code = 200;
