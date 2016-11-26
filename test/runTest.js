@@ -3,6 +3,7 @@ try{
     require("./inputValidateTest");
     require("./factoryTest");
     require("./endpointHttpTest");
+    require("./endpointHttpTest2");
     require("./endpointHttpSimpleTest");
     require("./endpointHttpContextTest");
     console.log("Ok");
