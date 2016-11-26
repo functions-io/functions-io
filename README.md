@@ -3,6 +3,17 @@
 ## work in progress...
 Minimalist functional framework for [node](http://nodejs.org).
 
+## Features
+  * Focus on high performance
+  * Auto reload change in javascript files
+  * Input/Output interface
+
+## Installation
+```bash
+$ npm install functions-io
+```
+
+## Usage
 ```javascript
 var functionsio = require("functions-io");
 var app = functionsio();
@@ -10,15 +21,18 @@ var app = functionsio();
 app.listen(8080);
 ```
 
-## Installation
-```bash
-$ npm install functions-io
+## Catalog API
 ```
-
-## Features
-  * Focus on high performance
-  * Auto reload change in javascript files
-  * Input/Output interface
+http://localhost:8080/catalog
+```
+## Admin
+```
+http://localhost:8080/admin
+```
+## swagger.json
+```
+http://localhost:8080/swagger.json
+```
 
 ## Options property
 * isGenerateStatistics
