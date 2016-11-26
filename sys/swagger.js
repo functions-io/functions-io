@@ -226,7 +226,7 @@ module.exports = function(context, message, callBack){
 
     spec = getSpec();
     
-    if (context.mountpath){
+    if ((context) && (context.mountpath)){
         spec.basePath = context.mountpath;
     }
     

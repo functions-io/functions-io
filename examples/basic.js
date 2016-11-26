@@ -1,5 +1,5 @@
 var functionsio = require("../");
-var app = functionsio({path:"test/functions", enableCORS: true});
+var app = functionsio({path:"test/functions"});
 
 app.listen(8080, function(err){
     if (!(err)){

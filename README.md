@@ -22,6 +22,7 @@ $ npm install functions-io
 
 ## Options property
 * isGenerateStatistics
+* isDisableGenerateHTML
 * enableCORS
 * enableCORSFromOrigin
 * path

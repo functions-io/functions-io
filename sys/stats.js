@@ -44,6 +44,7 @@ module.exports = function(context, message, callBack){
         newItemStats.name = item.name;
         newItemStats.version = item.version;
         newItemStats.summary = item.summary;
+        newItemStats.category = item.module.category;
         newItemStats.hits = item.hits;
 
         listStats.push(newItemStats);
