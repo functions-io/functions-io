@@ -5,7 +5,7 @@ Minimalist functional framework for [node](http://nodejs.org).
 
 ```javascript
 var functionsio = require("functions-io");
-var app = functionsio({path:"test/functions"});
+var app = functionsio();
 
 app.listen(8080);
 ```
@@ -19,3 +19,17 @@ $ npm install functions-io
   * Focus on high performance
   * Auto reload change in javascript files
   * Input/Output interface
+
+## Options property
+* isGenerateStatistics
+* enableCORS
+* enableCORSFromOrigin
+* path
+* mountpath
+```javascript
+//example
+var functionsio = require("functions-io");
+var app = functionsio({path:"test/functions", enableCORS: true});
+
+app.listen(8080);
+```

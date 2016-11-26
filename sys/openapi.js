@@ -225,7 +225,10 @@ module.exports = function(context, message, callBack){
     var spec = null;
 
     spec = getSpec();
-
+    if ((message) && (message.header) && (message.header.mountpath)){
+        spec.basePath = message.header.mountpath;
+    }
+    
     response.code = 200;
     response.headers = {};
     response.headers["Content-Type"] = "application/json";
