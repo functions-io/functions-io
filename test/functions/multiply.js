@@ -3,7 +3,7 @@
 module.name = "multiply";
 module.version = "v1";
 module.category = "test";
-module.summary = "multiply"
+module.summary = "multiply";
 module.description = "multiply x * y";
 
 module.input = {

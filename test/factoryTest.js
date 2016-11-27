@@ -91,7 +91,7 @@ app.start(function(err, dataScan){
             assert.equal(data.value, 5);
         });
 
-        app.factory.invoke(null, "sum", "v1", {x:2,y:3}, function(){}, function(err, data){
+        app.factory.invoke(null, "sum", "v1", {x:2,y:3}, null, function(err, data){
             assert.equal(err, null);
             console.log("data => " + data);
             assert.strictEqual(data.value, 5, "igual");

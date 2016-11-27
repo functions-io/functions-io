@@ -2,7 +2,7 @@
 
 module.version = "v1";
 module.category = "test2";
-module.summary = "sum"
+module.summary = "sum";
 module.description = "sum x + y";
 
 module.input = {

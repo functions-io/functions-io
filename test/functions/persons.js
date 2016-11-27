@@ -3,11 +3,11 @@
 module.name = "person.list";
 module.version = "v1";
 module.category = "test";
-module.summary = "list persons"
+module.summary = "list persons";
 module.description = "list persons";
 
 module.input = {
-    name:{type:"string", required:true, pattern: "[a-z0-9]{8,64}", minLength: 8, maxLength: 64},
+    name:{type:"string", required:true, minLength: 3, maxLength: 64},
     sex:{type:"string", required:true, enum: ["Male", "Female"]}
 };
 module.output = {

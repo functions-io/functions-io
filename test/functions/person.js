@@ -5,7 +5,7 @@
 module.name = "person.open";
 module.version = "v1";
 module.category = "test";
-module.summary = "open person"
+module.summary = "open person";
 module.description = "open person";
 
 module.input = {

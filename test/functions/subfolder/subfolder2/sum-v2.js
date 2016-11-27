@@ -3,7 +3,7 @@
 module.name = "subfolder.subfolder2.sum";
 module.version = "v2";
 module.category = "test2";
-module.summary = "sum"
+module.summary = "sum";
 module.description = "sum x + y";
 
 module.input = {
