@@ -1,6 +1,6 @@
 {
   "name": "functions-io",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Functional Micro Framework",
   "main": "lib/index.js",
   "readmeFilename": "README.md",

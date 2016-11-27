@@ -37,6 +37,9 @@ module.exports = function(context, message, callBack){
 
     qtdExec = listExec.length;
 
+    var diffTime = 0;
+    var start = process.hrtime();
+
     for (var i = 0; i < qtdExec; i++){
         (function(item){
             item.module.exports(null, null, function(err, data){
@@ -60,6 +63,9 @@ module.exports = function(context, message, callBack){
                 resultTest.listResult.push(testInfo);
 
                 if (resultTest.listResult.length === qtdExec){
+                    diffTime = (process.hrtime(start)[1] / 1000);
+                    resultTest.time = diffTime;
+
                     callBack(null, resultTest);
                 }
             });

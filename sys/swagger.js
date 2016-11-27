@@ -112,38 +112,6 @@ function addDefinition(definitions, definitionName, ObjectItem){
     }
 }
 
-function getParameters(ObjectItem){
-    var keys = Object.keys(ObjectItem);
-    var parameters = [];
-
-    for (var i = 0; i < keys.length; i++){
-        (function(itemInput, inputName){
-            var itemNewParam = {};
-            
-            itemNewParam.in = "query";
-            itemNewParam.name = inputName;
-            
-            itemNewParam.type = itemInput.type;
-
-            if (itemInput.required){
-                itemNewParam.required = itemInput.required;
-            }
-
-            if (itemInput.format){
-                itemNewParam.format = itemInput.format;
-            }
-
-            if (itemInput.description){
-                itemNewParam.description = itemInput.description;
-            }
-
-            parameters.push(itemNewParam);
-        })(ObjectItem[keys[i]], keys[i]);
-    }
-
-    return parameters;
-}
-
 function getSpec(){
     var specOpenApi = {};
     var listCatalog = [];
@@ -163,48 +131,33 @@ function getSpec(){
         (function(itemFunctionManager){
             var normalizedKey = getNormalizedName(itemFunctionManager.key);
             var newDefinition;
-            var openapi_get = {};
             var openapi_post = {};
 
             if (itemFunctionManager.module.category){
-                openapi_get.tags = [itemFunctionManager.module.category]
                 openapi_post.tags = [itemFunctionManager.module.category] 
             }
             if (itemFunctionManager.module.summary){
-                openapi_get.summary = itemFunctionManager.module.summary;
                 openapi_post.summary = itemFunctionManager.module.summary;
             }
             if (itemFunctionManager.module.description){
-                openapi_get.description = itemFunctionManager.module.description;
                 openapi_post.description = itemFunctionManager.module.description;
             }
-            openapi_get.consumes = ["application/json"];
-            openapi_get.produces = ["application/json"];
             openapi_post.consumes = ["application/json"];
             openapi_post.produces = ["application/json"];
 
             //parameters
-            openapi_get.parameters = [];
             openapi_post.parameters = [];
 
             if (itemFunctionManager.module.input){
-                openapi_get.parameters = getParameters(itemFunctionManager.module.input);
-
                 openapi_post.parameters.push({"name": "in_" + normalizedKey, "in": "body", "required": true, "schema": {"$ref": "#/definitions/type_in_" + normalizedKey}});
                 addDefinition(specOpenApi.definitions, "type_in_" + normalizedKey, itemFunctionManager.module.input);
             }
-
-            openapi_get.responses = {};
-            openapi_get.responses[200] = {};
-            openapi_get.responses[200].description = "Successful response";
 
             openapi_post.responses = {};
             openapi_post.responses[200] = {};
             openapi_post.responses[200].description = "Successful response";
             
             if (itemFunctionManager.module.output){
-                openapi_get.responses[200].schema = {};
-                openapi_get.responses[200].schema["$ref"] = "#/definitions/type_out_msg_" + normalizedKey;
                 openapi_post.responses[200].schema = {};
                 openapi_post.responses[200].schema["$ref"] = "#/definitions/type_out_msg_" + normalizedKey;
                 
@@ -212,8 +165,12 @@ function getSpec(){
                 addDefinition(specOpenApi.definitions, "type_out_" + normalizedKey, itemFunctionManager.module.output);
             }
 
-            //specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {get: openapi_get, post: openapi_post};
-            specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {post: openapi_post};
+            if (itemFunctionManager.stage){
+                specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version + "?stage=" + itemFunctionManager.stage] = {post: openapi_post};
+            }
+            else{
+                specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {post: openapi_post};
+            }
         })(module._factory.listFunctionManager[keys[i]]);
     }
 
