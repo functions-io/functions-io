@@ -22,14 +22,15 @@ module.exports = function(context, message, callBack){
     var listExec = [];
     var functionManager;
     var qtdExec;
+    var factory = module._factory;
 
     resultTest.success = true;
     resultTest.listResult = [];
 
-    keys = Object.keys(module._factory.listFunctionManager);
+    keys = Object.keys(factory.listFunctionManager);
 
     for (var i_function = 0; i_function < keys.length; i_function++){
-        functionManager = module._factory.listFunctionManager[keys[i_function]];
+        functionManager = factory.listFunctionManager[keys[i_function]];
         if ((functionManager.stage) && (functionManager.stage === "_UnitTest")){
             listExec.push(functionManager);
         }
@@ -42,7 +43,7 @@ module.exports = function(context, message, callBack){
 
     for (var i = 0; i < qtdExec; i++){
         (function(item){
-            item.module.exports(null, null, function(err, data){
+            item.module.exports({global:factory.global}, null, function(err, data){
                 var testInfo;
                 
                 if (err){
