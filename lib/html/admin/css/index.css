@@ -139,14 +139,18 @@ table > tbody > tr > td > span:last-child {
 }
 
 .catalogList th:nth-child(3), .catalogList td:nth-child(3) {
+    width: 60px;
+}
+
+.catalogList th:nth-child(4), .catalogList td:nth-child(4) {
     width: 120px;
 }
 
-.catalogList th:nth-child(n+4), .catalogList td:nth-child(n+4) {
+.catalogList th:nth-child(n+5), .catalogList td:nth-child(n+5) {
     width: 50px;
 }
 
-.catalogList th:nth-child(n+7), .catalogList td:nth-child(n+7) {
+.catalogList th:nth-child(n+8), .catalogList td:nth-child(n+8) {
     width: 20px;
 }
 

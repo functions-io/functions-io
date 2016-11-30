@@ -7,6 +7,7 @@
 		<title>Catalog</title>
 		<link rel="stylesheet" href="admin/css/index.css">
 		<script src="admin/js/index.js"></script>
+		<script src="admin/js/table.js"></script>
 	</head>
 	<body>
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" display="none" version="1.1">
@@ -26,22 +27,21 @@
 						<svg><use xlink:href="#icon-refresh"></use></svg>
 					</button>
 				</div>
-				<table>
+				<table id="tblCatalog">
 					<thead>
 						<tr>
-							<th>Name</th>
-							<th>Version</th>
-							<th>Category</th>
-							<th>Success</th>
-							<th>Error</th>
-							<th>Abort</th>
-							<th>Avg(ms)</th>
-							<th>Min(ms)</th>
-							<th>Max(ms)</th>
+							<th data-attr="name">Name</th>
+							<th data-attr="version">Version</th>
+							<th data-attr="stage">Stage</th>
+							<th data-attr="category">Category</th>
+							<th data-attr="hits.success">Success</th>
+							<th data-attr="hits.error">Error</th>
+							<th data-attr="hits.abort">Abort</th>
+							<th data-attr="hits.avgResponseTime" data-format="round">Avg(ms)</th>
+							<th data-attr="hits.minResponseTime" data-format="round">Min(ms)</th>
+							<th data-attr="hits.maxResponseTime" data-format="round">Max(ms)</th>
 						</tr>
 					</thead>
-					<tbody id="tblCatalog_tbody">
-					</tbody>
 				</table>
 			</section>
 		</main>
