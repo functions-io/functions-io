@@ -129,47 +129,55 @@ function getSpec(){
     keys = Object.keys(module._factory.listFunctionManager);
     for (var i = 0; i < keys.length; i++){
         (function(itemFunctionManager){
-            var normalizedKey = getNormalizedName(itemFunctionManager.key);
+            var normalizedKey;
             var newDefinition;
-            var openapi_post = {};
+            var openapi_post;
 
-            if (itemFunctionManager.module.category){
-                openapi_post.tags = [itemFunctionManager.module.category] 
-            }
-            if (itemFunctionManager.module.summary){
-                openapi_post.summary = itemFunctionManager.module.summary;
-            }
-            if (itemFunctionManager.module.description){
-                openapi_post.description = itemFunctionManager.module.description;
-            }
-            openapi_post.consumes = ["application/json"];
-            openapi_post.produces = ["application/json"];
-
-            //parameters
-            openapi_post.parameters = [];
-
-            if (itemFunctionManager.module.input){
-                openapi_post.parameters.push({"name": "in_" + normalizedKey, "in": "body", "required": true, "schema": {"$ref": "#/definitions/type_in_" + normalizedKey}});
-                addDefinition(specOpenApi.definitions, "type_in_" + normalizedKey, itemFunctionManager.module.input);
-            }
-
-            openapi_post.responses = {};
-            openapi_post.responses[200] = {};
-            openapi_post.responses[200].description = "Successful response";
-            
-            if (itemFunctionManager.module.output){
-                openapi_post.responses[200].schema = {};
-                openapi_post.responses[200].schema["$ref"] = "#/definitions/type_out_msg_" + normalizedKey;
-                
-                specOpenApi.definitions["type_out_msg_" + normalizedKey] = getDefinitionMessageResponse("#/definitions/type_out_" + normalizedKey);
-                addDefinition(specOpenApi.definitions, "type_out_" + normalizedKey, itemFunctionManager.module.output);
-            }
-
-            if (itemFunctionManager.stage){
-                specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version + "?stage=" + itemFunctionManager.stage] = {post: openapi_post};
+            if (itemFunctionManager.isPrivate){
+                //private
             }
             else{
-                specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {post: openapi_post};
+                normalizedKey = getNormalizedName(itemFunctionManager.key);
+                openapi_post = {};
+
+                if (itemFunctionManager.module.category){
+                    openapi_post.tags = [itemFunctionManager.module.category] 
+                }
+                if (itemFunctionManager.module.summary){
+                    openapi_post.summary = itemFunctionManager.module.summary;
+                }
+                if (itemFunctionManager.module.description){
+                    openapi_post.description = itemFunctionManager.module.description;
+                }
+                openapi_post.consumes = ["application/json"];
+                openapi_post.produces = ["application/json"];
+
+                //parameters
+                openapi_post.parameters = [];
+
+                if (itemFunctionManager.module.input){
+                    openapi_post.parameters.push({"name": "in_" + normalizedKey, "in": "body", "required": true, "schema": {"$ref": "#/definitions/type_in_" + normalizedKey}});
+                    addDefinition(specOpenApi.definitions, "type_in_" + normalizedKey, itemFunctionManager.module.input);
+                }
+
+                openapi_post.responses = {};
+                openapi_post.responses[200] = {};
+                openapi_post.responses[200].description = "Successful response";
+                
+                if (itemFunctionManager.module.output){
+                    openapi_post.responses[200].schema = {};
+                    openapi_post.responses[200].schema["$ref"] = "#/definitions/type_out_msg_" + normalizedKey;
+                    
+                    specOpenApi.definitions["type_out_msg_" + normalizedKey] = getDefinitionMessageResponse("#/definitions/type_out_" + normalizedKey);
+                    addDefinition(specOpenApi.definitions, "type_out_" + normalizedKey, itemFunctionManager.module.output);
+                }
+
+                if (itemFunctionManager.stage){
+                    specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version + "?stage=" + itemFunctionManager.stage] = {post: openapi_post};
+                }
+                else{
+                    specOpenApi.paths["/" + itemFunctionManager.name + "/" + itemFunctionManager.version] = {post: openapi_post};
+                }
             }
         })(module._factory.listFunctionManager[keys[i]]);
     }

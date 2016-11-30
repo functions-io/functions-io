@@ -39,19 +39,14 @@ module.exports = function(context, message, callBack){
     for (var i = 0; i < keys.length; i++){
         item = module._factory.listFunctionManager[keys[i]];
 
-        if ((item.stage) && (item.stage === "_UnitTest")){
-            //console.log("");
-        }
-        else{
-            newItemStats = {};
-            newItemStats.stage = item.stage;
-            newItemStats.name = item.name;
-            newItemStats.version = item.version;
-            newItemStats.summary = item.summary;
-            newItemStats.category = item.module.category;
-            newItemStats.hits = item.hits;
-            listStats.push(newItemStats);
-        }
+        newItemStats = {};
+        newItemStats.stage = item.stage;
+        newItemStats.name = item.name;
+        newItemStats.version = item.version;
+        newItemStats.summary = item.summary;
+        newItemStats.category = item.module.category;
+        newItemStats.hits = item.hits;
+        listStats.push(newItemStats);
     }
 
     callBack(null, listStats);
