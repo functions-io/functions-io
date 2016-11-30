@@ -33,6 +33,10 @@ http://localhost:8080/admin
 ```
 http://localhost:8080/swagger.json
 ```
+## Unit Test
+```
+http://localhost:8080/test
+```
 
 ## Options property
 * isGenerateStatistics
