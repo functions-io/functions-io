@@ -32,7 +32,12 @@ module.exports = function(context, message, callBack){
     for (var i_function = 0; i_function < keys.length; i_function++){
         functionManager = factory.listFunctionManager[keys[i_function]];
         if ((functionManager.stage) && (functionManager.stage === "_UnitTest")){
-            listExec.push(functionManager);
+            if (functionManager.isManualTest){
+                //test not automatic
+            }
+            else{
+                listExec.push(functionManager);
+            }
         }
     }
 

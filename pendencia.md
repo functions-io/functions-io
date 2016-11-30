@@ -4,4 +4,5 @@
 - [x] Por tempo nos teste unitários
 - [x] Págin web para visualização dos testes unitários
 - [x] Desabilitar na configuração carregamento de teste unitário
+- [ ] Aplicação termina quando carrega uma função com erro em tempo de compilação
 - [ ] Execução automática de teste unitário quando houver mudança
