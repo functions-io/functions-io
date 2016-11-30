@@ -41,6 +41,7 @@ http://localhost:8080/test
 ## Options property
 * isGenerateStatistics
 * isDisableGenerateHTML
+* disableLoadUnitTest
 * enableCORS
 * enableCORSFromOrigin
 * path
