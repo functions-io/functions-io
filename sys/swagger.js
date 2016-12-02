@@ -93,7 +93,7 @@ function addDefinition(definitions, definitionName, ObjectItem){
                         itemNewProperty.format = item.format;
                     }
                     if (item.description){
-                        itemNewProperty.description = itemOutput.description;
+                        itemNewProperty.description = item.description;
                     }
                     if (item.required){
                         definition.required.push(name);
