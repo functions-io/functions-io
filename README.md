@@ -73,7 +73,7 @@ http://localhost:8080/test
 * * executeOnStart (default: true)
 * scan
 * * automatic (default: true)
-* * interval (default: 5000)
+* * interval (default: 1000)
 ```javascript
 //example
 var functionsio = require("functions-io");
