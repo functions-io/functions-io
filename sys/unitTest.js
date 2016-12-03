@@ -24,57 +24,66 @@ module.exports = function(context, message, callBack){
     var qtdExec;
     var factory = module._factory;
 
-    resultTest.success = true;
-    resultTest.listResult = [];
+    try{
+        resultTest.success = true;
+        resultTest.listResult = [];
 
-    keys = Object.keys(factory.listFunctionManager);
+        keys = Object.keys(factory.listFunctionManager);
 
-    for (var i_function = 0; i_function < keys.length; i_function++){
-        functionManager = factory.listFunctionManager[keys[i_function]];
-        if ((functionManager.stage) && (functionManager.stage === "_unitTest")){
-            if (functionManager.module.isManualTest){
-                //test not automatic
-            }
-            else{
-                listExec.push(functionManager);
-            }
-        }
-    }
-
-    qtdExec = listExec.length;
-
-    var diffTime = 0;
-    var start = process.hrtime();
-
-    for (var i = 0; i < qtdExec; i++){
-        (function(item){
-            item.module.exports({global:factory.global}, null, function(err, data){
-                var testInfo;
-                
-                if (err){
-                    testInfo = {};
-                    testInfo.success = false;
-                    result.listResult = [];
+        for (var i_function = 0; i_function < keys.length; i_function++){
+            functionManager = factory.listFunctionManager[keys[i_function]];
+            if ((functionManager.stage) && (functionManager.stage === "_unitTest")){
+                if (functionManager.module.isManualTest){
+                    //test not automatic
                 }
                 else{
-                    testInfo = data;
+                    listExec.push(functionManager);
                 }
+            }
+        }
 
-                if (testInfo.success === false){
-                    resultTest.success = false;
-                }
+        qtdExec = listExec.length;
 
-                testInfo.name = item.name;
-                resultTest.total += testInfo.listResult.length;
-                resultTest.listResult.push(testInfo);
+        if (qtdExec === 0){
+            callBack(null, resultTest);
+        }
 
-                if (resultTest.listResult.length === qtdExec){
-                    diffTime = (process.hrtime(start)[1] / 1000);
-                    resultTest.time = diffTime;
+        var diffTime = 0;
+        var start = process.hrtime();
 
-                    callBack(null, resultTest);
-                }
-            });
-        })(listExec[i]);
+        for (var i = 0; i < qtdExec; i++){
+            (function(item){
+                item.module.exports({global:factory.global}, null, function(err, data){
+                    var testInfo;
+                    
+                    if (err){
+                        testInfo = {};
+                        testInfo.success = false;
+                        result.listResult = [];
+                    }
+                    else{
+                        testInfo = data;
+                    }
+
+                    if (testInfo.success === false){
+                        resultTest.success = false;
+                    }
+
+                    testInfo.name = item.name;
+                    resultTest.total += testInfo.listResult.length;
+                    resultTest.listResult.push(testInfo);
+
+                    if (resultTest.listResult.length === qtdExec){
+                        diffTime = (process.hrtime(start)[1] / 1000);
+                        resultTest.time = diffTime;
+
+                        callBack(null, resultTest);
+                    }
+                });
+            })(listExec[i]);
+        }
+    }
+    catch(errUnitTest){
+        callBack(errUnitTest);
     }
 };

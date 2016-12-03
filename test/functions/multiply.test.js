@@ -27,6 +27,17 @@ module.test["test 2 * 8 = 16"] = function(invoke, done){
     })
 };
 
+/*
+module.test["test 2 * 8 = 17"] = function(invoke, done){
+    invoke({x:2, y:8}, function(err, result){
+        assert.equal(err, null);
+        assert.equal(result.value, 17);
+
+        done();
+    })
+};
+*/
+
 module.after = function(invoke, done){
     done();
 }
