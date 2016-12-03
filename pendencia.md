@@ -8,6 +8,6 @@
 - [x] Aplicação termina quando carrega uma função com erro em tempo de compilação
 - [x] Refatorar configuração autoScan
 - [x] Execução automática de teste unitário quando carregar
-- [ ] Plugin vscode para teste unitario
+- [x] task para teste unitario
 - [ ] Mecanismo de Logs
 - [ ] Funções remotas
