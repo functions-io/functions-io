@@ -3,7 +3,7 @@ var assert = require("assert");
 var port = null;
 var host = "127.0.0.1";
 var http = require("http");
-var app = functionsio({path:"test/functions", autoScan: false});
+var app = functionsio({path:"test/functions", scan:{automatic: false}});
 
 function httpPost(messageType, path, data, callBack){
     var options = {

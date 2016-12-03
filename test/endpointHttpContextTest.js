@@ -3,23 +3,7 @@ var assert = require("assert");
 var port = null;
 var host = "127.0.0.1";
 var http = require("http");
-var app = functionsio({path:"test/functions", autoScan: false, mountpath:"/api"});
-//var app = functionsio({path:"test/functions", autoScan: false});
-
-/*
-app.use(function(req, res, next){
-    console.log("app1");
-    next();
-});
-
-app.use("/sum", function(req, res, next, mountpath){
-    if (mountpath){
-        var a1 = req.url.substring(mountpath.length + 1);
-    }
-    console.log("app2");
-    next();
-});
-*/
+var app = functionsio({path:"test/functions", scan:{automatic: false}, mountpath:"/api"});
 
 function httpPost(messageType, path, data, callBack){
     var options = {

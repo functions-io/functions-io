@@ -1,5 +1,5 @@
 var functionsio = require("../");
-var app = functionsio({path:"test/functions", autoScan: false});
+var app = functionsio({path:"test/functions", scan:{automatic: false}});
 var assert = require("assert");
 var functionManager;
 

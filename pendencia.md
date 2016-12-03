@@ -6,4 +6,8 @@
 - [x] Desabilitar na configuração carregamento de teste unitário
 - [x] Testar valores default
 - [x] Aplicação termina quando carrega uma função com erro em tempo de compilação
-- [ ] Execução automática de teste unitário quando houver mudança
+- [x] Refatorar configuração autoScan
+- [ ] Execução automática de teste unitário quando carregar
+- [ ] Plugin vscode para teste unitario
+- [ ] Mecanismo de Logs
+- [ ] Funções remotas
