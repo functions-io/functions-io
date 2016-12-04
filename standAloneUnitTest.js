@@ -49,7 +49,12 @@ httpPost(path, function(errHTTP, dataHTTP){
         }
         for (var i = 0; i < dataHTTP.result.listResult.length; i++){
             var item = dataHTTP.result.listResult[i];
-            console.log(item.success + " - " + item.description + " - " + item.time);
+            if (item.success){
+                console.log(item.success + " - " + item.description + " - " + item.time);
+            }
+            else{
+                console.log(item.success + " - " + item.description + " - " + item.time + " - " + item.error);
+            }
         }
     }
 });
