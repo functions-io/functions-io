@@ -11,3 +11,4 @@
 - [x] task para teste unitario
 - [ ] Mecanismo de Logs
 - [ ] Funções remotas
+- [ ] Correção bug nodejs quando envia um post com um path que não começa com "/"
