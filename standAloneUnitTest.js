@@ -41,20 +41,20 @@ httpPost(path, function(errHTTP, dataHTTP){
         console.log(errHTTP);
     }
     else{
-        if (dataHTTP.result.success){
+        if (dataHTTP.result && dataHTTP.result.success){
             console.log("unit test - OK");
+            for (var i = 0; i < dataHTTP.result.listResult.length; i++){
+                var item = dataHTTP.result.listResult[i];
+                if (item.success){
+                    console.log(item.success + " - " + item.description + " - " + item.time);
+                }
+                else{
+                    console.log(item.success + " - " + item.description + " - " + item.time + " - " + item.error);
+                }
+            }
         }
         else{
             console.log("unit test - FAIL");
-        }
-        for (var i = 0; i < dataHTTP.result.listResult.length; i++){
-            var item = dataHTTP.result.listResult[i];
-            if (item.success){
-                console.log(item.success + " - " + item.description + " - " + item.time);
-            }
-            else{
-                console.log(item.success + " - " + item.description + " - " + item.time + " - " + item.error);
-            }
         }
     }
 });
