@@ -12,8 +12,8 @@ ecstatic@^2.1.0:
     url-join "^1.0.0"
 
 functions-io-core@latest:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/functions-io-core/-/functions-io-core-0.1.5.tgz#8cdbaa1898c913bc598b1e427020c404ab61fb46"
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/functions-io-core/-/functions-io-core-0.1.6.tgz#587f104147c5feb56f0cdcb819b5d504b9875d2f"
 
 he@^0.5.0:
   version "0.5.0"
