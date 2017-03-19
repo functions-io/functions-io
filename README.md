@@ -58,7 +58,7 @@ http://localhost:8080/api/swagger.json
 ```
 ## Unit Test
 ```
-http://localhost:8080/test
+http://localhost:8080/_admin/test
 ```
 
 ## Options property
