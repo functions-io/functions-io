@@ -190,9 +190,9 @@ module.exports = function(context, message, callBack){
     var spec = null;
 
     spec = getSpec();
-    
-    if ((context) && (context.mountpath)){
-        spec.basePath = context.mountpath;
+
+    if ((context) && (context.header) && (context.header.mountpath)){
+        spec.basePath = context.header.mountpath;
     }
     
     response.code = 200;

@@ -62,22 +62,28 @@ http://localhost:8080/test
 ```
 
 ## Options property
-* isGenerateStatistics (default: true)
-* isDisableGenerateHTML (default: false)
-* enableCORS (default: false)
-* enableCORSFromOrigin (default: *)
 * path (default: functions)
-* mountpath (default: /)
+* baseURL (default: /api)
+* isGenerateStatistics (default: true)
 * unitTest
 * * load (default: true)
 * * executeOnStart (default: true)
 * scan
 * * automatic (default: true)
-* * interval (default: 1000)
+* * interval (default: 2000)
+* static
+* * root (ex: __dirname + '/public')
+* * cache (default: 3600)
+* * showDir (default: true)
+* * showDotfiles (default: true)
+* * headers (default: {})
+* * gzip (default: false)
+* * contentType (default: application/octet-stream)
+
 ```javascript
 //example
 var functionsio = require("functions-io");
-var app = functionsio({path:"test/functions", enableCORS: true, scan:{automatic:false}});
+var app = functionsio({path:"test/functions", scan:{automatic:false}});
 
 app.listen(8080);
 ```

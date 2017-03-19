@@ -17,7 +17,10 @@
     "type": "git",
     "url": "https://github.com/rogeriodegoiania/functions-io.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "ecstatic": "^2.1.0",
+    "functions-io-core": "latest"
+  },
   "devDependencies": {},
   "engines": {
     "node": ">=0.12.0"

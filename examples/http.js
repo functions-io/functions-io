@@ -11,7 +11,7 @@ app.start(function(err, dataScan){
 
         app.serverHTTP = http.createServer(app.processRequestHTTP);
 
-        app.factory.invoke(null, "sum", "v1", {x:5,y:5}, function(){}, function(err, result){
+        app.server.factory.invoke(null, "sum", "v1", {x:5,y:5}, function(){}, function(err, result){
             if (err){
                 console.log("Err => ");
                 console.log(err);
@@ -20,6 +20,9 @@ app.start(function(err, dataScan){
                 console.log("Resp => ");
                 console.log(result);
             }
+
+            //finalize app
+            app.stop();
         });
     }
 });
