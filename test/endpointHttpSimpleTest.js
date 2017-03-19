@@ -9,7 +9,7 @@ function httpPost(messageType, path, data, callBack){
     var options = {
         host: host,
         port: port,
-        path: path,
+        path: "/api" + path,
         method: "POST",
         headers: {
             "Content-Type": messageType,

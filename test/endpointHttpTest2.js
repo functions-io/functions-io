@@ -3,7 +3,7 @@ var assert = require("assert");
 var port = null;
 var host = "127.0.0.1";
 var http = require("http");
-var app = functionsio({path:"test/functions", scan:{automatic: false}, mountpath:"/api"});
+var app = functionsio({path:"test/functions", scan:{automatic: false}, baseURL:"/api2"});
 
 function httpPost(messageType, path, data, callBack){
     var options = {
@@ -61,7 +61,7 @@ function fim(){
 }
 
 function test1(){
-    httpPost("application/json", "/api/", "", function(errHTTPCode, data){
+    httpPost("application/json", "/api2/", "", function(errHTTPCode, data){
         assert.equal(errHTTPCode, 400);
         assert.equal(data.error.code, -32602); //Invalid params
         test2();
@@ -69,7 +69,7 @@ function test1(){
 }
 
 function test2(){
-    httpPost("application/json", "/api/", "{haha", function(errHTTPCode, data){
+    httpPost("application/json", "/api2/", "{haha", function(errHTTPCode, data){
         assert.equal(errHTTPCode, 400);
         assert.equal(data.error.code, -32700); //Parse error
         
@@ -78,7 +78,7 @@ function test2(){
 }
 
 function test3(){
-    httpPost("application/json", "/api/methodNotExist", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
+    httpPost("application/json", "/api2/methodNotExist", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
         assert.equal(errHTTPCode, 404);
         assert.equal(data.error.code, -32601); //Method not found
         
@@ -87,7 +87,7 @@ function test3(){
 }
 
 function test4(){
-    httpPost("application/json", "/api/sum/v1", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
+    httpPost("application/json", "/api2/sum/v1", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
         assert.equal(errHTTPCode, null);
         assert.equal(data.result.value, 8);
         
@@ -96,7 +96,7 @@ function test4(){
 }
 
 function test5(){
-    httpPost("application/json", "/api/subfolder.sum/v1", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
+    httpPost("application/json", "/api2/subfolder.sum/v1", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
         assert.equal(errHTTPCode, null);
         assert.equal(data.result.value, 8);
         

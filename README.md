@@ -46,15 +46,15 @@ app.listen(8080);
 
 ## Catalog API (Openapi / Swagger)
 ```
-http://localhost:8080/catalog
+http://localhost:8080/_admin/catalog/
 ```
 ## Admin
 ```
-http://localhost:8080/admin
+http://localhost:8080/_admin/stats/
 ```
 ## swagger.json
 ```
-http://localhost:8080/swagger.json
+http://localhost:8080/api/swagger.json
 ```
 ## Unit Test
 ```
@@ -73,6 +73,7 @@ http://localhost:8080/test
 * * interval (default: 2000)
 * static
 * * root (ex: __dirname + '/public')
+* * baseDir (default: '/')
 * * cache (default: 3600)
 * * showDir (default: true)
 * * showDotfiles (default: true)
