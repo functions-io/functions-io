@@ -44,26 +44,25 @@ var app = functionsio();
 app.listen(8080);
 ```
 
-## Catalog API (Openapi / Swagger)
-```
-http://localhost:8080/_admin/catalog/
-```
-## Admin
-```
-http://localhost:8080/_admin/stats/
-```
 ## swagger.json
 ```
 http://localhost:8080/api/swagger.json
 ```
+## Catalog API (Openapi / Swagger)
+```
+http://localhost:8081/catalog/
+```
+## Admin
+```
+http://localhost:8081/stats/
+```
 ## Unit Test
 ```
-http://localhost:8080/_admin/test
+http://localhost:8081/test
 ```
 
 ## Options property
 * path (default: functions)
-* baseURL (default: /api)
 * isGenerateStatistics (default: true)
 * unitTest
 * * load (default: true)
@@ -71,16 +70,12 @@ http://localhost:8080/_admin/test
 * scan
 * * automatic (default: true)
 * * interval (default: 2000)
-* static
-* * root (ex: __dirname + '/public')
-* * baseDir (default: '/')
-* * cache (default: 3600)
-* * showDir (default: true)
-* * showDotfiles (default: true)
-* * headers (default: {})
-* * gzip (default: false)
-* * contentType (default: application/octet-stream)
-
+* cors
+* * enable (default: true)
+* * fromOrigin (default: *)
+* html (default: true)
+* * enable (default: true)
+* * port (default: 8081)
 ```javascript
 //example
 var functionsio = require("functions-io");

@@ -3,13 +3,13 @@ var assert = require("assert");
 var port = null;
 var host = "127.0.0.1";
 var http = require("http");
-var app = functionsio({path:"test/functions", scan:{automatic: false}});
+var app = functionsio({path:"test/functions", scan:{automatic: false}, html:{enable:false}});
 
 function httpPost(messageType, path, data, callBack){
     var options = {
         host: host,
         port: port,
-        path: "/api" + path,
+        path: path,
         method: "POST",
         headers: {
             "Content-Type": messageType,
