@@ -133,7 +133,7 @@ function getSpec(){
             var newDefinition;
             var openapi_post;
 
-            if (itemFunctionManager.isPrivate){
+            if (itemFunctionManager.module.isPrivate){
                 //private
             }
             else{

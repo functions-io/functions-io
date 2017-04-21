@@ -73,9 +73,12 @@ http://localhost:8081/test
 * cors
 * * enable (default: true)
 * * fromOrigin (default: *)
-* html (default: true)
+* html
 * * enable (default: true)
 * * port (default: 8081)
+* db
+* * provider (default: store.db.provider.mongo)
+* * url (default: mongodb://localhost:27017/sample)
 ```javascript
 //example
 var functionsio = require("functions-io");
