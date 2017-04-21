@@ -19,7 +19,7 @@ var UtilDB = function(){
             callBack(null, db);
         }
         else{
-            MongoClient.connect(context.global.db.url, function(err, newDB) {
+            MongoClient.connect(context.global.config.db.url, function(err, newDB) {
                 if (err){
                     callBack(err);
                 }

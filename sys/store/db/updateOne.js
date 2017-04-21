@@ -7,7 +7,7 @@ module.validatePermission = false;
 module.isPrivate = true;
 
 module.exports = function(context, message, callBack){
-    var provider = message.providerDB || context.global.db.provider;
+    var provider = message.providerDB || context.global.config.db.provider;
 
     context.invoke(null, provider, null, message, function(errCon, con){
         if (errCon){
