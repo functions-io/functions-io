@@ -1,8 +1,8 @@
 "use strict";
 
-module.category = "store";
-module.name = "store.db.findOne";
-module.summary = "store findOne";
+module.category = "sys";
+module.name = "sys.db.nextSeq";
+module.summary = "nextSeq";
 module.validatePermission = false;
 module.isPrivate = true;
 
@@ -14,12 +14,12 @@ module.exports = function(context, message, callBack){
             callBack(errCon);
         }
         else{
-            con.collection(message.objectName).findOne(message.filter, function(err, document) {
+            con.collection("sequence").findOneAndUpdate({"_id": message.objectName}, {$inc:{"seq":1}}, {upsert:true, new:true}, function(err, documents) {
                 if (err){
                     callBack(err);
                 }
                 else{
-                    callBack(null, document);
+                    callBack(null, documents.value.seq);
                 }
             });
         }

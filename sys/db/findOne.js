@@ -1,8 +1,8 @@
 "use strict";
 
-module.category = "store";
-module.name = "store.db.deleteOne";
-module.summary = "store deleteOne";
+module.category = "sys";
+module.name = "sys.db.findOne";
+module.summary = "findOne";
 module.validatePermission = false;
 module.isPrivate = true;
 
@@ -14,12 +14,12 @@ module.exports = function(context, message, callBack){
             callBack(errCon);
         }
         else{
-            con.collection(message.objectName).deleteOne(message.filter, function(err, result) {
+            con.collection(message.objectName).findOne(message.filter, function(err, document) {
                 if (err){
                     callBack(err);
                 }
                 else{
-                    callBack(null, {count: result.deletedCount});
+                    callBack(null, document);
                 }
             });
         }

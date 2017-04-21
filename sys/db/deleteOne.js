@@ -1,8 +1,8 @@
 "use strict";
 
-module.category = "store";
-module.name = "store.db.find";
-module.summary = "store find";
+module.category = "sys";
+module.name = "sys.db.deleteOne";
+module.summary = "deleteOne";
 module.validatePermission = false;
 module.isPrivate = true;
 
@@ -14,12 +14,12 @@ module.exports = function(context, message, callBack){
             callBack(errCon);
         }
         else{
-            con.collection(message.objectName).find(message.filter, message.fields || {}).skip(message.skip).limit(message.limit).toArray(function(err, documents) {
+            con.collection(message.objectName).deleteOne(message.filter, function(err, result) {
                 if (err){
                     callBack(err);
                 }
                 else{
-                    callBack(null, {list:documents});
+                    callBack(null, {count: result.deletedCount});
                 }
             });
         }

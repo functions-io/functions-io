@@ -1,8 +1,8 @@
 "use strict";
 
-module.category = "store";
-module.name = "store.db.insertOne";
-module.summary = "store insertOne";
+module.category = "sys";
+module.name = "sys.db.insertOne";
+module.summary = "insertOne";
 module.validatePermission = false;
 module.isPrivate = true;
 

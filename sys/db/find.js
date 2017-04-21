@@ -1,8 +1,8 @@
 "use strict";
 
-module.category = "store";
-module.name = "store.db.updateOne";
-module.summary = "store updateOne";
+module.category = "sys";
+module.name = "sys.db.find";
+module.summary = "find";
 module.validatePermission = false;
 module.isPrivate = true;
 
@@ -14,12 +14,12 @@ module.exports = function(context, message, callBack){
             callBack(errCon);
         }
         else{
-            con.collection(message.objectName).updateOne(message.filter, {$set: message.data}, function(err, result) {
+            con.collection(message.objectName).find(message.filter, message.fields || {}).skip(message.skip).limit(message.limit).toArray(function(err, documents) {
                 if (err){
                     callBack(err);
                 }
                 else{
-                    callBack(null, {count: result.modifiedCount});
+                    callBack(null, {list:documents});
                 }
             });
         }

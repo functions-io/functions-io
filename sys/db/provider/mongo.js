@@ -1,8 +1,8 @@
 "use strict";
 
-module.category = "store";
-module.name = "store.db.provider.mongo";
-module.summary = "mongo store";
+module.category = "sys";
+module.name = "sys.db.provider.mongo";
+module.summary = "mongo provider";
 module.validatePermission = false;
 module.isPrivate = true;
 
