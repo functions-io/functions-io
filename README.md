@@ -63,7 +63,8 @@ http://localhost:8081/test
 
 ## Options property
 * path (default: functions)
-* isGenerateStatistics (default: true)
+* enableStatistics (default: true)
+* enableSecurity (default: false)
 * unitTest
 * * load (default: true)
 * * executeOnStart (default: true)
