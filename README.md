@@ -46,15 +46,15 @@ app.listen(8080);
 
 ## swagger.json
 ```
-http://localhost:8080/api/swagger.json
+http://localhost:8080/swagger.json
 ```
 ## Catalog API (Openapi / Swagger)
 ```
-http://localhost:8081/catalog/
+http://localhost:8081/catalog
 ```
 ## Admin
 ```
-http://localhost:8081/stats/
+http://localhost:8081/stats
 ```
 ## Unit Test
 ```
@@ -67,7 +67,7 @@ http://localhost:8081/test
 * enableSecurity (default: false)
 * unitTest
 * * load (default: true)
-* * executeOnStart (default: true)
+* * executeOnStart (default: false)
 * scan
 * * automatic (default: true)
 * * interval (default: 2000)
@@ -78,12 +78,83 @@ http://localhost:8081/test
 * * enable (default: true)
 * * port (default: 8081)
 * db
-* * provider (default: store.db.provider.mongo)
-* * url (default: mongodb://localhost:27017/sample)
+* * provider (default: sys.db.provider.mongo)
+* functions
+* * sys.db.provider.mongo
+* * * db
+* * * * url (default: mongodb://localhost:27017/sample)
+
 ```javascript
 //example
 var functionsio = require("functions-io");
-var app = functionsio({path:"test/functions", scan:{automatic:false}});
+var app = functionsio();
 
 app.listen(8080);
+```
+* example file config.json
+```json
+{
+    "functions":{
+        "sys.db.provider.mongo":{
+            "db":{
+                "url":"mongodb://localhost:27017/sample"
+            }
+        }
+    }
+}
+```
+
+* example file config.json
+```json
+{
+    "unitTest":{
+        "load": true,
+        "executeOnStart": false
+    },
+    "functions":{
+        "sys.db.provider.mongo":{
+            "db":{
+                "url":"mongodb://localhost:27017/sample"
+            }
+        }
+    }
+}
+```
+
+* example file config.json
+```json
+{
+    "scan":{
+        "automatic": true
+    },
+    "unitTest":{
+        "load": true,
+        "executeOnStart": false
+    },
+    "functions":{
+        "sys.db.provider.mongo":{
+            "db":{
+                "url":"mongodb://localhost:27017/sample"
+            }
+        }
+    }
+}
+```
+
+* example file config.json
+```json
+{
+    "scan":{
+        "automatic": true
+    },
+    "unitTest":{
+        "load": true,
+        "executeOnStart": false
+    },
+    "global":{
+        "db":{
+            "provider":"sys.db.provider.myprovider"
+        }
+    }
+}
 ```
