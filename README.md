@@ -50,15 +50,15 @@ http://localhost:8080/swagger.json
 ```
 ## Catalog API (Openapi / Swagger)
 ```
-http://localhost:8081/catalog
+http://localhost:8080/_admin/catalog
 ```
 ## Admin
 ```
-http://localhost:8081/stats
+http://localhost:8080/_admin/stats
 ```
 ## Unit Test
 ```
-http://localhost:8081/test
+http://localhost:8080/_admin/test
 ```
 
 ## Options property
@@ -72,11 +72,10 @@ http://localhost:8081/test
 * * automatic (default: true)
 * * interval (default: 2000)
 * cors
-* * enable (default: true)
+* * enable (default: false)
 * * fromOrigin (default: *)
 * html
-* * enable (default: true)
-* * port (default: 8081)
+* * static (default: static)
 * db
 * * provider (default: sys.db.provider.mongo)
 * functions
