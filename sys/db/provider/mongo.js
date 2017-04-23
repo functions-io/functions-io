@@ -5,7 +5,7 @@ module.name = "sys.db.provider.mongo";
 module.summary = "mongo provider";
 module.validatePermission = false;
 module.isPrivate = true;
-module.config = {db:{url:"mongodb://localhost:27017/sample"}}
+module.config = {db:{url:"mongodb://localhost:27017/sample"}};
 
 var UtilDB = function(){
     var MongoClient = null;
