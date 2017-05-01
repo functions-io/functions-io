@@ -1,7 +1,7 @@
 "use strict";
 
-module.category = "sys";
-module.name = "sys.security.token.generate";
+module.category = "sys.security";
+module.name = "sys.security.provider.token.generate";
 module.summary = "generateToken";
 module.validatePermission = false;
 module.isPrivate = true;

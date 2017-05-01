@@ -1,45 +1,45 @@
 "use strict";
 
-module.category = "sys";
+module.category = "sys.security";
 module.name = "sys.security.provider.login.mongo";
 module.summary = "login provider";
 module.validatePermission = false;
 module.isPrivate = true;
 module.config = {
-    collectionName:"user",
+    hashAlgorithm:"sha256",
+    collectionName:"security.user",
     searchByField:"name",
     checkPasswordByField:"password",
-    return:{
-        fieldSub:"mail",
-        fieldName:"name"
-    }
+    returnFields:{"name":true,"mail":true}
 };
 
+var crypto = require("crypto");
 module.exports = function(context, message, callBack){
     var filter = {};
+    var fields = {};
+
     filter[module.config.searchByField] = message.userName;
+    Object.assign(fields, module.config.returnFields)
+    fields[module.config.checkPasswordByField] = true;
 
-    callBack(null, {user:{id:1, name:"user2"}});
-    return;
-
-    context.invoke(null, "sys.db.findOne", null, {objectName:module.config.collectionName, filter:filter}, function(err, data){
+    context.invoke(null, "sys.db.findOne", null, {objectName:module.config.collectionName, filter:filter, fields:fields}, function(err, data){
         if (err){
             callBack(err);
         }
         else{
             if (data){
-                if (data[module.config.checkPasswordByField] === message.password){
-                    var user = {};
-                    user.sub = message[module.config.return.fieldSub];
-                    user.name = message[module.config.return.fieldName];
-                    callBack(null, user);
+                var passwordHash = crypto.createHash(module.config.hashAlgorithm).update(message.password).digest("base64");
+                
+                if (data[module.config.checkPasswordByField] === passwordHash){
+                    delete data[module.config.checkPasswordByField];
+                    callBack(null, data);
                 }
                 else{
-                    callBack("Password not valid");
+                    callBack({code:2, message:"Invalid username or password"})
                 }
             }
             else{
-                callBack("User not found");
+                callBack({code:1, message:"Invalid username or password"})
             }
         }
     });

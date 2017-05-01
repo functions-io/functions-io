@@ -23,7 +23,9 @@
     "functions-io-core": "latest",
     "jsonwebtoken": "^7.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mongodb": "^2.2.26"
+  },
   "engines": {
     "node": ">=0.12.0"
   },

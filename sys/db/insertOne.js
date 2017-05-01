@@ -1,18 +1,24 @@
 "use strict";
 
-module.category = "sys";
+module.category = "sys.db";
 module.name = "sys.db.insertOne";
 module.summary = "insertOne";
 module.validatePermission = false;
 module.isPrivate = true;
+module.config = {
+    provider:"sys.db.provider.mongo"
+};
 
 module.exports = function(context, message, callBack){
-    var provider = "sys.db.provider.mongo";
+    var provider;
     if (message.providerDB){
         provider = message.providerDB;
     }
     else if ((context.global.db) && (context.global.db.provider)){
         provider = context.global.db.provider;
+    }
+    else{
+        provider = module.config.provider;
     }
 
     context.invoke(null, provider, null, message, function(errCon, con){

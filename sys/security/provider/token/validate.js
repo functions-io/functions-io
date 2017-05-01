@@ -1,9 +1,10 @@
 "use strict";
 
-module.category = "sys";
-module.name = "sys.security.token.validate";
+module.category = "sys.security";
+module.name = "sys.security.provider.token.validate";
 module.summary = "validateToken";
 module.validatePermission = false;
+module.isPrivate = false;
 module.config = {
     privateKey:"key"
 };

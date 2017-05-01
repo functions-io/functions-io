@@ -1,10 +1,11 @@
 "use strict";
 
-module.category = "sys";
+module.category = "sys.security";
 module.name = "sys.security.login";
 module.summary = "login";
 module.config = {
-    loginProvider:"sys.security.provider.login.sample"
+    loginProvider:"sys.security.provider.login.mongo",
+    generateTokenProvider:"sys.security.provider.token.generate"
 };
 
 module.input = {
@@ -17,14 +18,12 @@ module.output = {
 }
 
 module.exports = function(context, message, callBack){
-    console.log("login => ");
-    console.log(message);
     context.invoke(null, module.config.loginProvider, null, message, function(err, user){
         if (err){
             callBack(err);
         }
         else{
-            context.invoke(null, "sys.security.token.generate", null, user, callBack);
+            context.invoke(null, module.config.generateTokenProvider, null, user, callBack);
         }
     });
 };

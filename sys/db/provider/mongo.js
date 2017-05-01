@@ -1,6 +1,6 @@
 "use strict";
 
-module.category = "sys";
+module.category = "sys.db";
 module.name = "sys.db.provider.mongo";
 module.summary = "mongo provider";
 module.validatePermission = false;
