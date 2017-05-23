@@ -87,7 +87,7 @@ function test3(){
 }
 
 function test4(){
-    httpPost("application/json", "/sum/v1", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
+    httpPost("application/json", "/sum/1.0.0", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
         assert.equal(errHTTPCode, null);
         assert.equal(data.result.value, 8);
         
@@ -96,7 +96,7 @@ function test4(){
 }
 
 function test5(){
-    httpPost("application/json", "/subfolder.sum/v1", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
+    httpPost("application/json", "/subfolder.sum/1.0.0", JSON.stringify({"x":2,"y":6}), function(errHTTPCode, data){
         assert.equal(errHTTPCode, null);
         assert.equal(data.result.value, 8);
         

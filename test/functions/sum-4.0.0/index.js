@@ -1,10 +1,6 @@
 "use strict";
 
-module.name = "sum";
-module.version = "v3";
-module.category = "test";
-module.summary = "sum";
-module.description = "sum x + y";
+var libSum = require("/lib/libSum");
 
 module.input = {
     x:{type:"integer", required:false, default: 10},
@@ -15,5 +11,5 @@ module.output = {
 };
 
 module.exports = function(context, message, callBack){
-    callBack(null, {value: message.x + message.y});
+    callBack(null, {value: libSum(message.x, message.y)});
 };

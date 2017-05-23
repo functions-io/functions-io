@@ -1,5 +1,5 @@
 var functionsio = require("../");
-var app = functionsio({path:"test/functions"});
+var app = functionsio({path:__dirname + "/../test/functions"});
 var http = require("http");
 
 app.start(function(err, dataScan){

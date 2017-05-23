@@ -1,5 +1,5 @@
 var functionsio = require("../");
-var app = functionsio({path:"test/functions", scan:{load:false, automatic:false}});
+var app = functionsio({path:__dirname + "/../test/functions", scan:{load:false, automatic:false}});
 
 app.listen(8080, function(err){
     if (!(err)){

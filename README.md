@@ -7,7 +7,7 @@ Minimalist functional framework for [node](http://nodejs.org).
   * Focus on high performance
   * Auto reload change in javascript files
   * Input/Output with automatic validation
-  * Unit Test with automatic execution
+  * Test with automatic execution
   * Openapi/Swagger definition generated automatically
   * Statistics - access, error, abort, time
 
@@ -17,13 +17,25 @@ $ npm install functions-io
 ```
 
 ## Usage
-### Create a function in folder functions
-```javascript
-module.version = "v1";
-module.category = "test";
-module.summary = "sum";
-module.description = "sum x + y";
 
+### Create a subfolder in functions folder and generate package.json
+```bash
+$ npm init
+```
+
+### example package.json
+```json
+{
+  "name": "sum",
+  "version": "1.0.0",
+  "description": "sum x + y",
+  "main": "index.js"
+}
+```
+
+### create file index.js
+
+```javascript
 module.input = {
     x:{type:"integer", required:true},
     y:{type:"integer", required:true}
@@ -36,6 +48,7 @@ module.exports = function(context, message, callBack){
     callBack(null, {value: message.x + message.y});
 };
 ```
+
 ### Start Server
 ```javascript
 var functionsio = require("functions-io");
@@ -56,7 +69,7 @@ http://localhost:8080/_admin/catalog
 ```
 http://localhost:8080/_admin/stats
 ```
-## Unit Test
+## Test
 ```
 http://localhost:8080/_admin/test
 ```
@@ -65,7 +78,7 @@ http://localhost:8080/_admin/test
 * path (default: functions)
 * enableStatistics (default: true)
 * enableSecurity (default: false)
-* unitTest
+* test
 * * load (default: true)
 * * executeOnStart (default: false)
 * scan

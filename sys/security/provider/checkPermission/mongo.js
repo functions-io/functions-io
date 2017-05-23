@@ -14,8 +14,6 @@ module.exports = function(context, message, callBack){
     var filter = {};
     var fields = {};
 
-    message.roles = ["guest","guest2"];
-
     filter._id = {};
     filter._id["$in"] = message.roles;
     filter.permissions = message.permission;
