@@ -19,7 +19,7 @@ module.exports = function(context, message, callBack){
     var fields = {};
 
     filter[module.config.searchByField] = message.userName;
-    Object.assign(fields, module.config.returnFields)
+    Object.assign(fields, module.config.returnFields);
     fields[module.config.checkPasswordByField] = true;
 
     context.invoke(null, "sys.db.findOne", null, {objectName:module.config.collectionName, filter:filter, fields:fields}, function(err, data){
@@ -35,11 +35,11 @@ module.exports = function(context, message, callBack){
                     callBack(null, data);
                 }
                 else{
-                    callBack({code:2, message:"Invalid username or password"})
+                    callBack({code:2, message:"Invalid username or password"});
                 }
             }
             else{
-                callBack({code:1, message:"Invalid username or password"})
+                callBack({code:1, message:"Invalid username or password"});
             }
         }
     });

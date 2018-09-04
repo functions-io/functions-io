@@ -15,7 +15,7 @@ module.input = {
 
 module.output = {
     token:{type:"string", required:true}
-}
+};
 
 module.exports = function(context, message, callBack){
     context.invoke(null, module.config.loginProvider, null, message, function(err, user){

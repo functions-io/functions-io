@@ -1,7 +1,0 @@
-POST http://localhost:8080/multiply/1.0.0 HTTP/1.1
-content-type: application/json
-
-{
-    "x":2,
-    "y":8
-}

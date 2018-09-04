@@ -53,7 +53,7 @@ function addDefinition(definitions, definitionName, ObjectItem){
                 }
                 itemNewProperty.items = {};
                 itemNewProperty.items["$ref"] = "#/definitions/" + definitionName + "_" + name;
-                addDefinition(definitions, definitionName + "_" + name, item.items)
+                addDefinition(definitions, definitionName + "_" + name, item.items);
                 definition.properties[name] = itemNewProperty;
             }
             if (item.type === "object"){
@@ -114,7 +114,6 @@ function addDefinition(definitions, definitionName, ObjectItem){
 
 function getSpec(){
     var specOpenApi = {};
-    var listCatalog = [];
     var keys;
     
     specOpenApi.swagger = "2.0";
@@ -130,7 +129,6 @@ function getSpec(){
     for (var i = 0; i < keys.length; i++){
         (function(itemFunctionManager){
             var normalizedKey;
-            var newDefinition;
             var openapi_post;
 
             if (itemFunctionManager.module.isPrivate){
@@ -141,7 +139,7 @@ function getSpec(){
                 openapi_post = {};
 
                 if (itemFunctionManager.module.category){
-                    openapi_post.tags = [itemFunctionManager.module.category] 
+                    openapi_post.tags = [itemFunctionManager.module.category];
                 }
                 if (itemFunctionManager.module.summary){
                     openapi_post.summary = itemFunctionManager.module.summary;

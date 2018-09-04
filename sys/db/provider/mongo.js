@@ -13,7 +13,7 @@ var UtilDB = function(){
 
     this.getClient = function(context, callBack){
         if (MongoClient === null){
-            MongoClient = require('mongodb').MongoClient;
+            MongoClient = require("mongodb").MongoClient;
         }
 
         if (db){
@@ -31,7 +31,7 @@ var UtilDB = function(){
             });
         }
     };
-}
+};
 
 var utilDB = new UtilDB();
 module.exports = function(context, message, callBack){

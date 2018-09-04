@@ -1,5 +1,8 @@
 ### Pendências
 
+* https://github.com/epoberezkin/ajv
+* https://github.com/Twipped/joi-to-swagger#readme
+
 - [x] Stage pela url
 - [x] Por tempo nos teste unitários
 - [x] Págin web para visualização dos testes unitários

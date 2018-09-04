@@ -13,7 +13,7 @@ module.input = {
     token:{type:"string", required:true}
 };
 
-var jwt = require('jsonwebtoken');
+var jwt = require("jsonwebtoken");
 module.exports = function(context, message, callBack){
     jwt.verify(message.token, module.config.privateKey, callBack);
 };

@@ -10,7 +10,7 @@ module.config = {
     privateKey:"key"
 };
 
-var jwt = require('jsonwebtoken');
+var jwt = require("jsonwebtoken");
 module.exports = function(context, message, callBack){
     var tokenSign;
 
