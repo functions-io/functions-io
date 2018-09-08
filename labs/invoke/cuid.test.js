@@ -1,4 +1,4 @@
-const functionsio = require("../lib");
+const functionsio = require("../../lib");
 
 var message = {};
 message.id = 1;
