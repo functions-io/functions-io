@@ -8,6 +8,7 @@ config.opt = {};
 config.opt.algorithm = "HS256";
 config.opt.expiresIn = 3600;
 config.opt.issuer = "functions-io";
+config.opt.audience = "functions-io";
 /*
 config.opt.expiresIn: expressed in seconds or a string describing a time span zeit/ms. Eg: 60, "2 days", "10h", "7d". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (days, hours, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 config.opt.notBefore: expressed in seconds or a string describing a time span zeit/ms. Eg: 60, "2 days", "10h", "7d". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (days, hours, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
@@ -21,6 +22,7 @@ config.opt.keyid
 config.opt.mutatePayload
 */
 
+userObj.id = 1;
 userObj.name = "fulano";
 
 let tokenJWT = oauth.generateTokenJWT(config, userObj);
