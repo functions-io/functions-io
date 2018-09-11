@@ -196,5 +196,7 @@ module.exports = function(context, message, callBack){
 
 curl -XPOST http://localhost:8080/oauth2/token -H "content-type:application/json" -d '{"grant_type":"password","username": "admin","password": "admin","audience": "https://someapi.com/api", "scope": "read:sample", "client_id": "YOUR_CLIENT_ID", "client_secret": "YOUR_CLIENT_SECRET"}' -v
 
+curl -XPOST http://localhost:8080/oauth2/token -H "content-type:application/json" -d '{"grant_type":"password","username": "admin","password": "admin", "scope": "read:sample"}' -v
+
 curl -XPOST http://localhost:8080 -H "content-type:application/json" -d '{"jsonrpc":"2.0","scope":"functions-io-labs","method":"math.sum","version":"2.0.0","params": [2,4]}' -v
 
