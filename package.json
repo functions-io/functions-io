@@ -18,6 +18,9 @@
     "url": "https://github.com/rogeriodegoiania/functions-io.git"
   },
   "dependencies": {
+    "@functions-io-modules/security.authentication.filter": "1.*",
+    "@functions-io-modules/security.authorization.filter": "1.*",
+    "@functions-io-modules/security.input.filter": "1.*"
   },
   "engines": {
     "node": ">=8.0.0"
