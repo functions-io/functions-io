@@ -7,7 +7,6 @@ Minimalist FaaS framework for [node](http://nodejs.org).
   * Focus on high performance
   * Input/Output with automatic validation
   * Openapi/Swagger definition generated automatically
-  * Statistics - access, error, abort, time
 
 ## Installation
 ```bash
@@ -167,31 +166,6 @@ app.listen(8080);
         }
     }
 }
-```
-
-* custom login
-```js
-"use strict";
-
-module.category = "sys";
-module.name = "sys.security.provider.login.sample";
-module.summary = "login provider";
-module.validatePermission = false;
-module.isPrivate = true;
-module.errorName = "security.login";
-
-module.exports = function(context, message, callBack){
-    if (message.userName === "admin" && message.password === "admin"){
-        var user = {};
-        user.name = "admin";
-        user.sub = "admin@admin.com";
-
-        callBack(null, user);
-    }
-    else{
-        callBack({code:1, message:"Invalid username or password"})
-    }
-};
 ```
 
 curl -XPOST http://localhost:8080 -H "content-type:application/json" -d '{"jsonrpc":"2.0","scope":"functions-io-modules","method":"security.token.generate","version":"1","params": {"username":"admin", "password":"123"} }' -v

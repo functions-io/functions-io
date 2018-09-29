@@ -10,6 +10,8 @@ message.method = "math.multiply";
 message.version = "1.0.0";
 message.params = [20,3];
 
+var timeInit = new Date().getTime();
 functionsio.invokeFactory.invokeMessage(message, function(errInvoke, messageResponse){
+    console.log("Response in " + (new Date().getTime() - timeInit) + "ms");
     console.log(errInvoke, messageResponse);
 });
