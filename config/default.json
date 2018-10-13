@@ -42,9 +42,30 @@
             }
         },
         "listFilter":{
-            "input":{"moduleName":"@functions-io-modules/security.input.filter", "enabled":true},
-            "authorization":{"moduleName":"@functions-io-modules/security.authorization.filter", "enabled":false},
-            "authentication":{"moduleName":"@functions-io-modules/security.authentication.filter", "enabled":false, "stage":"before"}
+            "input":{
+                "enabled":true,
+                "moduleName":"@functions-io-modules/security.input.filter"
+            },
+            "authorization":{
+                "enabled":false,
+                "moduleName":"@functions-io-modules/security.authorization.filter",
+                "config":{
+                    "hasPermissionModuleName":"@functions-io-modules/security.haspermission.mongo",
+                    "hasPermissionModuleVersion":"1.*",
+                    "roleAdminName":"root"
+                }
+            },
+            "authentication":{
+                "enabled":false,
+                "moduleName":"@functions-io-modules/security.authentication.filter",
+                "stage":"before",
+                "config":{
+                    "secretOrPrivateKey":"aaaa",
+                    "algorithm":"HS256",
+                    "issuer":"functions-io",
+                    "whiteList":["@functions-io-modules/security.token.generate"]
+                }
+            }
         }
     }
 }

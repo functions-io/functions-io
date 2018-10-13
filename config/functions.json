@@ -1,0 +1,36 @@
+{
+    "@functions-io-modules/security.token.generate":{
+        "config":{
+            "secretOrPrivateKey":"aaaa",
+            "algorithm":"HS256",
+            "issuer":"functions-io",
+            "expiresIn":3600,
+            "loginModuleName":"@functions-io-modules/security.login.mongo",
+            "loginModuleVersion":"1.*"
+        }
+    },
+    "@functions-io-modules/security.haspermission.mongo":{
+        "config":{
+            "db_url" : "mongodb://localhost:27017",
+            "db_username" : "",
+            "db_password" : "",
+            "db_name": "security",
+            "db_collection_name": "role",
+            "db_fieldRoleName": "_id",
+            "db_fieldPermissionsName" : "permissions"
+        }
+    },
+    "@functions-io-modules/security.login.mongo":{
+        "config":{
+            "db_url" : "mongodb://localhost:27017",
+            "db_username" : "",
+            "db_password" : "",
+            "db_name": "security",
+            "db_collection_name": "user",
+            "db_fieldPassword": "password",
+            "db_fieldsReturn" : ["name","email","roles"],
+            "security_hash_algorithm" : "SHA1",
+            "security_hash_salt" : ""
+        }
+    }
+}
