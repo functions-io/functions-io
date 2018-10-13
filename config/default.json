@@ -1,0 +1,50 @@
+{
+    "core":{
+        "log":{
+            "level":"INFO"
+        }
+    },
+    "registry":{
+        "remote":{
+            "url":"https://registry.npmjs.org"
+        },
+        "circuitBreakerTimeOut": 10000,
+        "requestTimeout": 5000
+    },
+    "io":{
+        "listGateway":{
+            "http":{
+                "moduleName":"@functions-io-modules/functions-io-modules-gateway-http",
+                "enabled":true,
+                "config":{
+                    "web":{
+                        "enabled":true,
+                        "ecstatic":{
+                            "root":"html",
+                            "showDir":true,
+                            "autoIndex":true
+                        }
+                    },
+                    "http":{
+                        "enabled":true,
+                        "port":8080
+                    },
+                    "https":{
+                        "enabled":true,
+                        "port":8443,
+                        "key":"key.pem",
+                        "cert":"cert.pem",
+                        "passphrase":"1234"
+                    },
+                    "listMiddlewareHTTP":["./handles/handleBody", "./handles/handleMessage", "./handles/handleHTML"],
+                    "headers":{}
+                }
+            }
+        },
+        "listFilter":{
+            "input":{"moduleName":"@functions-io-modules/security.input.filter", "enabled":true},
+            "authorization":{"moduleName":"@functions-io-modules/security.authorization.filter", "enabled":false},
+            "authentication":{"moduleName":"@functions-io-modules/security.authentication.filter", "enabled":false, "stage":"before"}
+        }
+    }
+}
