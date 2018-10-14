@@ -1,6 +1,6 @@
 {
   "name": "functions-io",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Functional Micro Framework",
   "main": "lib/index.js",
   "readmeFilename": "README.md",
@@ -23,7 +23,7 @@
     "@functions-io-modules/security.authentication.filter": "1.*",
     "@functions-io-modules/security.authorization.filter": "1.*",
     "@functions-io-modules/security.input.filter": "1.*",
-    "functions-io-core": "^0.13.0"
+    "functions-io-core": "^0.14.0"
   },
   "engines": {
     "node": ">=8.0.0"

@@ -66,6 +66,16 @@
                     "whiteList":["@functions-io-modules/security.token.generate"]
                 }
             }
+        },
+        "listDataSourceDriver":{
+            "mongo":{
+                "enabled":true,
+                "moduleName":"@functions-io-modules/datasource.driver.mongo"
+            },
+            "mysql":{
+                "enabled":false,
+                "moduleName":"@functions-io-modules/datasource.driver.mysql"
+            }
         }
     }
 }
