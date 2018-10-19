@@ -5,7 +5,17 @@
             "url" : "mongodb://localhost:27017",
             "options":{
             },
-            "dataBaseName": "security"
+            "database": "security"
+        }
+    },
+    "@functions-io-modules/security2":{
+        "type":"mysql",
+        "config":{
+            "connectionLimit":5,
+            "host":"localhost",
+            "user": "me",
+            "password":"secret",
+            "database":"security"
         }
     }
 }
