@@ -2,6 +2,9 @@
     "core":{
         "log":{
             "level":"INFO"
+        },
+        "cache":{
+            "blackListLocalModules":["functions-io-core", "functions-io"]
         }
     },
     "registry":{
@@ -12,6 +15,9 @@
         "requestTimeout": 5000
     },
     "io":{
+        "route":{
+            "security.login":{"moduleName":"@functions-io-modules/security.token.generate", "moduleVersion":"*"}
+        },
         "listGateway":{
             "http":{
                 "moduleName":"@functions-io-modules/functions-io-modules-gateway-http",
