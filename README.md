@@ -168,6 +168,6 @@ app.listen(8080);
 }
 ```
 
-curl -XPOST http://localhost:8080 -H "content-type:application/json" -d '{"jsonrpc":"2.0","scope":"functions-io-modules","method":"security.token.generate","version":"1","params": {"username":"admin", "password":"123"} }' -v
+curl -XPOST http://localhost:8080 -H "content-type:application/json" -d '{"jsonrpc":"2.0","method":"security.login","params": {"username":"admin", "password":"123"} }' -v
 
 curl -XPOST http://localhost:8080 -H "content-type:application/json" -H "authorization:bearer " -d '{"jsonrpc":"2.0","scope":"functions-io-labs","method":"math.sum","version":"2.0.0","params": [2,4]}' -v
