@@ -58,7 +58,7 @@
                 "config":{
                     "hasPermissionModuleName":"@functions-io-modules/security.haspermission.mongo",
                     "hasPermissionModuleVersion":"1.*",
-                    "roleAdminName":"root"
+                    "whiteList":["@functions-io-modules/security.token.generate"]
                 }
             },
             "authentication":{
