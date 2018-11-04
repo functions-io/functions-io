@@ -1,2 +1,0 @@
-FunctionsErrorSecurityUnauthorized
-FunctionsErrorDataStoreRequest
