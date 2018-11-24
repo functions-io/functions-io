@@ -46,7 +46,7 @@
                         "cert":"cert.pem",
                         "passphrase":"1234"
                     },
-                    "listMiddlewareHTTP":["./handles/handleBody", "./handles/handleMessage", "./handles/handleHTML"],
+                    "listMiddlewareHTTP":["./handles/handleCORS", "./handles/handleBody", "./handles/handleMessage", "./handles/handleHTML"],
                     "headers":{}
                 }
             }

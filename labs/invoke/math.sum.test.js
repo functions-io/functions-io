@@ -5,7 +5,6 @@ message.id = 1;
 message.jsonrpc = "2.0";
 message.scope = "functions-io-labs";
 message.method = "math.sum";
-//message.version = "2.0.0";
 message.version = "2";
 message.params = [20,3];
 
